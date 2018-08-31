@@ -1,20 +1,16 @@
 package com.shearer.jetmoviedb.features.movie.list
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.shearer.jetmoviedb.R
+import org.koin.android.ext.android.inject
 
 class MovieListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MovieListFragment()
-    }
-
-    private lateinit var viewModel: MovieListViewModel
+    private val viewModel: MovieListViewModel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -23,8 +19,11 @@ class MovieListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MovieListViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.stuff()
+    }
+
+    companion object {
+        fun newInstance() = MovieListFragment()
     }
 
 }
