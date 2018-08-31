@@ -1,7 +1,7 @@
 package com.shearer.jetmoviedb
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.shearer.jetmoviedb.features.movie.list.MovieListFragment
 
 class MainActivity : AppCompatActivity() {
