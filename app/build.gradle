@@ -14,7 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        buildConfigField 'String', "MOVIE_DB_API_KEY", moviedb_api_key
+        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"${System.getenv("MOVIEDB_API_KEY")}\""
     }
     buildTypes {
         release {
