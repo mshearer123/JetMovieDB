@@ -1,5 +1,6 @@
 package com.shearer.jetmoviedb.features.movie.interactor
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -11,15 +12,15 @@ import org.junit.Test
 class MovieInteractorDefaultTest {
 
     private val repository = mock<MovieRepository> {
-        on { getPopular() } doReturn Single.just(createPopularMovies())
+        on { getPopular(any()) } doReturn Single.just(createPopularMovies())
     }
 
     private val interactor = MovieInteractorDefault(repository)
 
     @Test
     fun getPopular_callsRepository() {
-        interactor.getPopular()
+        interactor.getPopular(1)
 
-        verify(repository).getPopular()
+        verify(repository).getPopular(1)
     }
 }

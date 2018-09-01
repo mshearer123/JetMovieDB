@@ -9,15 +9,20 @@ import com.shearer.jetmoviedb.features.movie.interactor.MovieInteractor
 import com.shearer.jetmoviedb.features.movie.paging.MovieDataFactory
 import io.reactivex.disposables.CompositeDisposable
 
-class MovieListViewModel(movieInteractor: MovieInteractor, pagedListConfig: PagedList.Config) : ViewModel() {
+class MovieListViewModel(movieInteractor: MovieInteractor) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     private val popularMovieDataFactory = MovieDataFactory(movieInteractor, compositeDisposable)
-
     var moviesLiveData: LiveData<PagedList<Movie>>
 
     init {
-        moviesLiveData = LivePagedListBuilder(popularMovieDataFactory, pagedListConfig).build()
+        val pagingConfig = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(20)
+                .setPageSize(20)
+                .build()
+
+        moviesLiveData = LivePagedListBuilder(popularMovieDataFactory, pagingConfig).build()
     }
 
     override fun onCleared() {
