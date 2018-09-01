@@ -9,10 +9,11 @@ import retrofit2.http.Query
 
 class MovieDbApi {
     interface Dao {
+
         @GET("movie/popular")
         fun getPopularMovies(@Query("page") page: String = "1"): Single<MovieResultDto>
 
-        @GET("genres/movie/list")
+        @GET("genre/movie/list")
         fun getMovieGenres(@Query("language") page: String = "en-US"): Single<GenreResultDto>
     }
 }

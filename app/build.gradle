@@ -26,10 +26,25 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+                // All the usual Gradle options.
+                testLogging {
+                    events "failed", "skipped"
+                    outputs.upToDateWhen { false }
+                    showStandardStreams = true
+                }
+            }
+        }
+    }
 }
 
 ext {
-    koin_version = '1.0.0-alpha-11"'
+    koin_version = '1.0.0-alpha-11'
     retrofit_version = '2.4.0'
     stetho_version = '1.5.0'
 }
@@ -37,14 +52,13 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-rc02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
     implementation 'androidx.palette:palette:1.0.0-rc02'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
     implementation 'com.google.android.material:material:1.0.0-rc01'
-
 
     // retrofit - https://square.github.io/retrofit/
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -63,14 +77,21 @@ dependencies {
     implementation 'org.koin:koin-android:1.0.0-beta-7'
     implementation 'org.koin:koin-androidx-viewmodel:1.0.0-beta-7'
 
+    // picasso - http://square.github.io/picasso/
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
-    // stetho -http://facebook.github.io/stetho/
+    // stetho - http://facebook.github.io/stetho/
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
+
 
     testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     testImplementation 'com.google.truth:truth:0.34'
     testImplementation 'junit:junit:4.12'
+    testImplementation "androidx.arch.core:core-testing:2.0.0-rc01"
+    testImplementation 'androidx.test:rules:1.1.0-alpha4'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
 }

@@ -5,25 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shearer.jetmoviedb.R
-import org.koin.android.ext.android.inject
+import com.shearer.jetmoviedb.shared.extensions.observeNotNull
+import kotlinx.android.synthetic.main.fragment_movie_list.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment() {
 
-    private val viewModel: MovieListViewModel by inject()
+    private val movieListViewModel: MovieListViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    private val movieAdapter by lazy {
+        MovieListAdapter(emptyList()) {
+            movieListViewModel.onMovieClicked(it)
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = movieAdapter
+            setHasFixedSize(true)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.stuff()
+        movieListViewModel.movies.observeNotNull(this) { data ->
+            movieAdapter.data = data
+            movieAdapter.notifyDataSetChanged()
+        }
     }
-
-    companion object {
-        fun newInstance() = MovieListFragment()
-    }
-
 }

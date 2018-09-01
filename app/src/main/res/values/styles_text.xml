@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="font_body1">14sp</dimen>
+    <dimen name="font_body2">16sp</dimen>
+
+    <style name="Body1" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_body1</item>
+    </style>
+
+    <style name="Body1Grey1" parent="Body1">
+        <item name="android:textColor">@color/grey1</item>
+    </style>
+
+    <style name="Body1Grey2" parent="Body1">
+        <item name="android:textColor">@color/grey2</item>
+    </style>
+
+    <style name="Body1ErrorOrange" parent="Body1">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="Body1Grey2.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Body1Grey3" parent="Body1">
+        <item name="android:textColor">@color/grey3</item>
+    </style>
+
+    <style name="Body1Grey3.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Body1Grey3.Bold.Italic">
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+    <style name="Body1White" parent="Body1">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Body1White.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Body2" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_body2</item>
+    </style>
+
+    <style name="Body2Grey1" parent="Body2">
+        <item name="android:textColor">@color/grey1</item>
+    </style>
+
+    <style name="Body2Grey2" parent="Body2">
+        <item name="android:textColor">@color/grey2</item>
+    </style>
+
+    <style name="Body2Grey3" parent="Body2">
+        <item name="android:textColor">@color/grey3</item>
+    </style>
+
+    <style name="Body2Grey3.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>

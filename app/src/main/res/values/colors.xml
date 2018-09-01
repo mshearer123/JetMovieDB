@@ -6,5 +6,10 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
+    <color name="background_blue1">#EEF2F6</color>
+    <color name="orange">#FF7F00</color>
+    <color name="green">#79B31D</color>
+    <color name="grey1">#AAAAAA</color>
+    <color name="grey2">#858585</color>
+    <color name="grey3">#666666</color>
 </resources>
