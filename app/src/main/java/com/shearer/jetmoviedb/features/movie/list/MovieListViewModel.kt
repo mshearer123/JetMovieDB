@@ -32,11 +32,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
                 .subscribe(::onGetPopularMoviesSuccess, ::onGetPopularMoviesFailure)
     }
 
-
-    public fun stuff() {
-
-    }
-
     private fun transform(movieResults: MovieResults): List<MovieListItem> {
 
         return movieResults.movies.map {

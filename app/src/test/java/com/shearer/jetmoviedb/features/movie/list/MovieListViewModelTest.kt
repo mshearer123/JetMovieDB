@@ -29,16 +29,13 @@ class MovieListViewModelTest {
 
     @Test
     fun init_callsInteractorForPopularMovies() {
-        movieListViewModel.stuff()
         movieListViewModel.run {
-            assertThat(movies.value).isEmpty()
             verify(interactor).getPopular()
         }
     }
 
     @Test
     fun init_callsPopularMovies_convertsToMovieListItems() {
-        movieListViewModel.stuff()
         movieListViewModel.run {
             movies.value?.run {
                 assertThat(size).isEqualTo(20)
