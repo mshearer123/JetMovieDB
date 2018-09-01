@@ -45,7 +45,7 @@ class MovieListViewModelTest {
                 assertThat(get(0).title).isEqualTo("Avengers: Infinity War (2018)")
                 assertThat(get(0).genres).isEqualTo("Adventure, Science Fiction, Fantasy, Action")
                 assertThat(get(0).popularity).isEqualTo("220.311")
-                assertThat(get(0).photoUrl).isEqualTo("/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
+                assertThat(get(0).photoUrl).isEqualTo("https://image.tmdb.org/t/p/w342//7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
             }
         }
     }
