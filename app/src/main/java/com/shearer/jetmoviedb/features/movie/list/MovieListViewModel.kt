@@ -21,6 +21,10 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     }
 
     init {
+        loadMovies()
+    }
+
+    private fun loadMovies() {
         compositeDisposable += movieInteractor
                 .getPopular()
                 .map(::transform)
@@ -39,7 +43,7 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
             MovieListItem(title = "${it.title} (${it.releaseYear})",
                     genres = it.genres,
                     popularity = it.popularity,
-                    photoUrl = it.thumbnailUrl)
+                    photoUrl = "https://image.tmdb.org/t/p/w342/" + it.thumbnailUrl)
         }
     }
 

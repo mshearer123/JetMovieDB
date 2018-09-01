@@ -16,8 +16,7 @@
             android:id="@+id/moviePoster"
             android:layout_width="80dp"
             android:layout_height="100dp"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:background="@color/black"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
             android:id="@+id/movieTitle"

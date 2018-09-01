@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.shared.extensions.inflate
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_movie.view.*
 
 class MovieListAdapter(var data: List<MovieListItem> = emptyList(),
@@ -28,6 +29,7 @@ class MovieListAdapter(var data: List<MovieListItem> = emptyList(),
             titleTextView.text = item.title
             genreTextView.text = item.genres
             populatityTextView.text = item.popularity
+            Picasso.get().load(item.photoUrl).fit().into(posterImageView)
             itemView.setOnClickListener {
                 itemClickListener(adapterPosition)
             }
