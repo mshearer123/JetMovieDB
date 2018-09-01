@@ -11,7 +11,7 @@ class MovieDbApi {
     interface Dao {
 
         @GET("movie/popular")
-        fun getPopularMovies(@Query("page") page: String = "1"): Single<MovieResultDto>
+        fun getPopularMovies(@Query("page") page: Long): Single<MovieResultDto>
 
         @GET("genre/movie/list")
         fun getMovieGenres(@Query("language") page: String = "en-US"): Single<GenreResultDto>

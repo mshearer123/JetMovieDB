@@ -16,7 +16,7 @@ class MovieListFragment : Fragment() {
     private val movieListViewModel: MovieListViewModel by viewModel()
 
     private val movieAdapter by lazy {
-        MovieListAdapter(emptyList()) {
+        MovieListPagingAdapter {
             movieListViewModel.onMovieClicked(it)
         }
     }
@@ -36,9 +36,6 @@ class MovieListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.movies.observeNotNull(this) { data ->
-            movieAdapter.data = data
-            movieAdapter.notifyDataSetChanged()
-        }
+        movieListViewModel.moviesLiveData.observeNotNull(this) { pagedList -> movieAdapter.submitList(pagedList) }
     }
 }
