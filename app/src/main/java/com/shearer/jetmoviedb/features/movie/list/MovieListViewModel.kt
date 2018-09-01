@@ -32,11 +32,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
                 .subscribe(::onGetPopularMoviesSuccess, ::onGetPopularMoviesFailure)
     }
 
-
-    public fun stuff() {
-
-    }
-
     private fun transform(movieResults: MovieResults): List<MovieListItem> {
 
         return movieResults.movies.map {
@@ -46,6 +41,7 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
                     photoUrl = "https://image.tmdb.org/t/p/w342/" + it.thumbnailUrl)
         }
     }
+
 
     public fun onMovieClicked(index: Int) {
 
