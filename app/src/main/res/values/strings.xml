@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JetMovieDB</string>
+    <string name="movie_title">%s (%s)</string>
 </resources>
