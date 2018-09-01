@@ -1,4 +1,4 @@
-package com.shearer.jetmoviedb.shared
+package com.shearer.jetmoviedb.shared.extensions
 
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

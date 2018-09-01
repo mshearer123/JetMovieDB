@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 ext {
@@ -64,6 +68,7 @@ dependencies {
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
+    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     testImplementation 'com.google.truth:truth:0.34'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'

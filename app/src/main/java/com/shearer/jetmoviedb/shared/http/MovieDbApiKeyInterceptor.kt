@@ -15,5 +15,4 @@ class MovieDbApiKeyInterceptor : Interceptor {
 
         return chain.proceed(request.newBuilder().url(url).build())
     }
-
 }
