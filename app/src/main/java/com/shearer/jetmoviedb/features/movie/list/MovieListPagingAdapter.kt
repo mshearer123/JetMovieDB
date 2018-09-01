@@ -3,10 +3,10 @@ package com.shearer.jetmoviedb.features.movie.list
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.domain.Movie
-import com.shearer.jetmoviedb.features.movie.domain.Movie.Companion.MOVIE_DIFF_CALLBACK
 import com.shearer.jetmoviedb.shared.extensions.getString
 import com.shearer.jetmoviedb.shared.extensions.inflate
 import com.squareup.picasso.Picasso
@@ -38,4 +38,18 @@ class MovieListPagingAdapter(private val itemClickListener: (Int) -> Unit
             }
         }
     }
+
+    companion object {
+        val MOVIE_DIFF_CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.title == newItem.title
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
+
 }
