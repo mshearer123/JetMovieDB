@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"${System.getenv("MOVIEDB_API_KEY")}\""
     }
     buildTypes {
         release {
@@ -20,7 +22,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
+
+ext {
+    koin_version = '1.0.0-alpha-11"'
+    retrofit_version = '2.4.0'
+    stetho_version = '1.5.0'
+}
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -30,9 +43,32 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
     implementation 'androidx.palette:palette:1.0.0-rc02'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
-
     implementation 'com.google.android.material:material:1.0.0-rc01'
 
+
+    // retrofit - https://square.github.io/retrofit/
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // okhttp - http://square.github.io/okhttp/
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    // rxjava2 - https://github.com/ReactiveX/RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    // koin - https://github.com/InsertKoinIO/koin
+    implementation 'org.koin:koin-android:1.0.0-beta-7'
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.0-beta-7'
+
+
+    // stetho -http://facebook.github.io/stetho/
+    debugImplementation "com.facebook.stetho:stetho:$stetho_version"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
+    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     testImplementation 'com.google.truth:truth:0.34'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
