@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.shared.extensions.observeNotNull
 import kotlinx.android.synthetic.main.fragment_movie_list.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment() {
 
-    private val viewModel: MovieListViewModel by inject()
+    private val movieListViewModel: MovieListViewModel by viewModel()
 
     private val movieAdapter by lazy {
         MovieListAdapter(emptyList()) {
-            viewModel.onMovieClicked(it)
+            movieListViewModel.onMovieClicked(it)
         }
     }
 
@@ -36,8 +36,7 @@ class MovieListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.stuff()
-        viewModel.movies.observeNotNull(this) { data ->
+        movieListViewModel.movies.observeNotNull(this) { data ->
             movieAdapter.data = data
             movieAdapter.notifyDataSetChanged()
         }
