@@ -1,6 +1,6 @@
-package com.shearer.jetmoviedb.features.movie.repository
+package com.shearer.jetmoviedb.features.movie.common.repository
 
-import com.shearer.jetmoviedb.features.movie.domain.MovieResults
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import io.reactivex.Single
 import io.reactivex.Single.just
 

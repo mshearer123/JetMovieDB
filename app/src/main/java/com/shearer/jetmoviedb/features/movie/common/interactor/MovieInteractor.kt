@@ -1,17 +1,17 @@
-package com.shearer.jetmoviedb.features.movie.interactor
+package com.shearer.jetmoviedb.features.movie.common.interactor
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
-import com.shearer.jetmoviedb.features.movie.db.MovieDb
-import com.shearer.jetmoviedb.features.movie.domain.Movie
-import com.shearer.jetmoviedb.features.movie.domain.MovieResults
+import com.shearer.jetmoviedb.features.movie.common.db.MovieDb
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.list.Listing
 import com.shearer.jetmoviedb.features.movie.list.SearchInfo
-import com.shearer.jetmoviedb.features.movie.paging.MovieBoundaryCallback
-import com.shearer.jetmoviedb.features.movie.repository.MovieDbConstants
-import com.shearer.jetmoviedb.features.movie.repository.MovieRepository
+import com.shearer.jetmoviedb.features.movie.common.paging.MovieBoundaryCallback
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieRepository
 import com.shearer.jetmoviedb.shared.extensions.applyIoSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign

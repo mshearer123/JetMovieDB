@@ -1,6 +1,6 @@
-package com.shearer.jetmoviedb.features.movie.repository.dto
+package com.shearer.jetmoviedb.features.movie.common.repository.dto
 
-import com.shearer.jetmoviedb.features.movie.domain.MovieResults
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 
 data class MovieResultDto(
         val page: Int,

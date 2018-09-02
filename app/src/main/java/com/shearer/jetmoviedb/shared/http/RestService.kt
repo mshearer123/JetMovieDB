@@ -2,8 +2,8 @@ package com.shearer.jetmoviedb.shared.http
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.shearer.jetmoviedb.BuildConfig
-import com.shearer.jetmoviedb.features.movie.repository.MovieDbApi
-import com.shearer.jetmoviedb.features.movie.repository.MovieDbConstants
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbApi
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Converter

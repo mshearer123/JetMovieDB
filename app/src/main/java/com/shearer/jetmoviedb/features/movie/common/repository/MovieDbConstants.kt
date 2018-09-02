@@ -1,4 +1,4 @@
-package com.shearer.jetmoviedb.features.movie.repository
+package com.shearer.jetmoviedb.features.movie.common.repository
 
 class MovieDbConstants {
     companion object {

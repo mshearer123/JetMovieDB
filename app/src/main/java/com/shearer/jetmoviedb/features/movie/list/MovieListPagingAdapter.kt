@@ -6,7 +6,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shearer.jetmoviedb.R
-import com.shearer.jetmoviedb.features.movie.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.shared.extensions.getString
 import com.shearer.jetmoviedb.shared.extensions.inflate
 import com.squareup.picasso.Picasso

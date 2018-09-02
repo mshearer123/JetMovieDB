@@ -1,11 +1,11 @@
-package com.shearer.jetmoviedb.features.movie.db
+package com.shearer.jetmoviedb.features.movie.common.db
 
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.shearer.jetmoviedb.features.movie.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 
 @Dao
 interface MovieDao {

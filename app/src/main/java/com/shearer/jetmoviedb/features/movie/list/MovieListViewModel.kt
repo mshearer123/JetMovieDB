@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
-import com.shearer.jetmoviedb.features.movie.interactor.MovieInteractor
+import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {

@@ -1,4 +1,4 @@
-package com.shearer.jetmoviedb.features.movie.repository.dto
+package com.shearer.jetmoviedb.features.movie.common.repository.dto
 
 import com.google.common.truth.Truth.assertThat
 import com.shearer.jetmoviedb.createGenreDto
@@ -7,8 +7,9 @@ import org.junit.Test
 
 class MovieDtoTest {
 
+    private val type = "type"
     private val genres = createGenreDto().toGenres()
-    private val movie = createPopularMoviesDto().results[0].toMovie(genres)
+    private val movie = createPopularMoviesDto().results[0].toMovie(genres, type)
 
 
     @Test
@@ -34,5 +35,10 @@ class MovieDtoTest {
     @Test
     fun toMovie_convertsToMovie_resolvesPosterPath() {
         assertThat(movie.url).isEqualTo("/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
+    }
+
+    @Test
+    fun toMovie_convertsToMovie_setsType() {
+        assertThat(movie.type).isEqualTo(type)
     }
 }

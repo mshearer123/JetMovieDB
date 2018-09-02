@@ -1,4 +1,4 @@
-package com.shearer.jetmoviedb.features.movie.repository
+package com.shearer.jetmoviedb.features.movie.common.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockito_kotlin.any
@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.shearer.jetmoviedb.createGenreDto
 import com.shearer.jetmoviedb.createPopularMoviesDto
-import com.shearer.jetmoviedb.features.movie.db.MovieDb
+import com.shearer.jetmoviedb.features.movie.common.db.MovieDb
 import io.reactivex.Single
 import org.junit.Test
 

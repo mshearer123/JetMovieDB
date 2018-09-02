@@ -1,11 +1,11 @@
-package com.shearer.jetmoviedb.features.movie.paging
+package com.shearer.jetmoviedb.features.movie.common.paging
 
 import android.arch.paging.PagingRequestHelper
 import androidx.paging.PagedList
-import com.shearer.jetmoviedb.features.movie.domain.Movie
-import com.shearer.jetmoviedb.features.movie.domain.MovieResults
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.list.SearchInfo
-import com.shearer.jetmoviedb.features.movie.repository.MovieRepository
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieRepository
 import com.shearer.jetmoviedb.shared.extensions.applySchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign

@@ -1,4 +1,4 @@
-package com.shearer.jetmoviedb.features.movie.domain
+package com.shearer.jetmoviedb.features.movie.common.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
