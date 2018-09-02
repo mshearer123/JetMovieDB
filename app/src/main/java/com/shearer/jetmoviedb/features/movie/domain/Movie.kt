@@ -17,6 +17,6 @@ data class Movie(
         val releaseYear: String,
         @SerializedName("thumbnailUrl")
         val thumbnailUrl: String) {
-    var indexInResponse: Int = -1
+    var page: Int = -1
 }
 

@@ -10,7 +10,7 @@ import java.util.concurrent.Executor
 class MovieBoundaryCallback(private val dao: MovieDbApi.Dao,
                             private val ioExecutor: Executor,
                             private val handleResponse: (List<Movie>) -> Unit
-                            ) : PagedList.BoundaryCallback<Movie>() {
+) : PagedList.BoundaryCallback<Movie>() {
 
     private val helper = PagingRequestHelper(ioExecutor)
 
@@ -32,7 +32,7 @@ class MovieBoundaryCallback(private val dao: MovieDbApi.Dao,
 
     override fun onItemAtEndLoaded(itemAtEnd: Movie) {
 
-        val nextPage = (itemAtEnd.indexInResponse + 1) / 20 + 1
+        val nextPage = itemAtEnd.page + 1
 
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) { callback ->
             val disposable = dao.getPopularMovies(nextPage.toLong()).applySchedulers()

@@ -39,11 +39,11 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao, private val dbDao:
 
     private fun insertMoviesIntoDb(movies: List<Movie>) {
         dbDao.runInTransaction {
-            val start = dbDao.movies().getNextIndex()
-            (0 until movies.size).forEach { i ->
-                movies[i].indexInResponse = start + i
-            }
-            dbDao.movies().insert(movies)
+            val nextPage = dbDao.movies().getNexPage()
+            dbDao.movies().insert(movies.map {
+                it.page = nextPage
+                it
+            })
         }
     }
 }

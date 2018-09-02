@@ -12,13 +12,13 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(movies: List<Movie>)
 
-    @Query("SELECT * FROM movies ORDER BY indexInResponse ASC")
+    @Query("SELECT * FROM movies")
     fun movies(): DataSource.Factory<Int, Movie>
 
     @Query("DELETE FROM movies")
     fun delete()
 
-    @Query("SELECT MAX(indexInResponse) + 1 FROM movies")
-    fun getNextIndex(): Int
+    @Query("SELECT MAX(page) + 1 FROM movies")
+    fun getNexPage(): Int
 
 }
