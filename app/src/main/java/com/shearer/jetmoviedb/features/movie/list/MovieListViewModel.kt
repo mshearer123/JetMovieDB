@@ -34,11 +34,12 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
 
     }
 
+    fun onPopularClicked() {
+        searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
+    }
+
     fun onSearchClicked(searchString: String) {
         searchTerm.value = SearchInfo(SearchInfo.Type.SEARCH, searchString)
     }
 
-    fun onSearch(searchTerm: String) {
-//        moviesLiveData = movieInteractor.getMovies(compositeDisposable, refresh = true, searchTerm = searchTerm)
-    }
 }

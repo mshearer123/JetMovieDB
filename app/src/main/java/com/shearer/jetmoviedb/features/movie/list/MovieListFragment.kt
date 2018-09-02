@@ -49,10 +49,16 @@ class MovieListFragment : Fragment() {
                 editText.visibility = View.GONE
                 val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                popularChip.visibility = View.VISIBLE
                 return@setOnEditorActionListener true
             }
 
             return@setOnEditorActionListener false
+        }
+
+        popularChip.setOnClickListener {
+            popularChip.visibility = View.GONE
+            movieListViewModel.onPopularClicked()
         }
 
     }
