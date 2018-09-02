@@ -15,11 +15,7 @@ class MovieListFragment : Fragment() {
 
     private val movieListViewModel: MovieListViewModel by viewModel()
 
-    private val movieAdapter by lazy {
-        MovieListPagingAdapter {
-            movieListViewModel.onMovieClicked(it)
-        }
-    }
+    private val movieAdapter by lazy { MovieListPagingAdapter(movieListViewModel::onMovieClicked) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
@@ -32,10 +28,14 @@ class MovieListFragment : Fragment() {
             adapter = movieAdapter
             setHasFixedSize(true)
         }
+        swipeToRefreshLayout.setOnRefreshListener(movieListViewModel::onRefresh)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.moviesLiveData.observeNotNull(this) { pagedList -> movieAdapter.submitList(pagedList) }
+        movieListViewModel.moviesLiveData.observeNotNull(this) { it ->
+            swipeToRefreshLayout.isRefreshing = it.isEmpty()
+            movieAdapter.submitList(it)
+        }
     }
 }

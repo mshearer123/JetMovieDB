@@ -7,7 +7,7 @@ import com.shearer.jetmoviedb.features.movie.domain.Movie
 import com.shearer.jetmoviedb.features.movie.interactor.MovieInteractor
 import io.reactivex.disposables.CompositeDisposable
 
-class MovieListViewModel(movieInteractor: MovieInteractor) : ViewModel() {
+class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     var moviesLiveData: LiveData<PagedList<Movie>>
@@ -21,8 +21,11 @@ class MovieListViewModel(movieInteractor: MovieInteractor) : ViewModel() {
         compositeDisposable.clear()
     }
 
+    fun onRefresh() {
+        moviesLiveData = movieInteractor.getPopular(compositeDisposable, refresh = true)
+    }
 
-    public fun onMovieClicked(index: Int) {
+    fun onMovieClicked(index: Int) {
 
     }
 }
