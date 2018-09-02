@@ -5,25 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import com.shearer.jetmoviedb.features.movie.common.db.MovieDb
-import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
-import com.shearer.jetmoviedb.features.movie.list.Listing
-import com.shearer.jetmoviedb.features.movie.list.SearchInfo
 import com.shearer.jetmoviedb.features.movie.common.paging.MovieBoundaryCallback
 import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
 import com.shearer.jetmoviedb.features.movie.common.repository.MovieRepository
+import com.shearer.jetmoviedb.features.movie.list.MovieListState
+import com.shearer.jetmoviedb.features.movie.list.SearchInfo
 import com.shearer.jetmoviedb.shared.extensions.applyIoSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
 interface MovieInteractor {
 
-    fun getMovies(searchInfo: SearchInfo, disposables: CompositeDisposable): Listing<Movie>
+    fun getMovies(searchInfo: SearchInfo, disposables: CompositeDisposable): MovieListState
 }
 
 class MovieInteractorDefault(private val movieRepository: MovieRepository, private val dbDao: MovieDb) : MovieInteractor {
 
-    override fun getMovies(searchInfo: SearchInfo, disposables: CompositeDisposable): Listing<Movie> {
+    override fun getMovies(searchInfo: SearchInfo, disposables: CompositeDisposable): MovieListState {
         val callback = MovieBoundaryCallback(disposables, movieRepository, searchInfo) { insertMoviesInDatabase(it, searchInfo) }
 
 
@@ -41,7 +40,7 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
         val refreshState = Transformations.switchMap(refreshTrigger) {
             refresh(disposables, searchInfo)
         }
-        return Listing(pagedList = builder.build(), refreshing = refreshState)
+        return MovieListState(pagedList = builder.build(), refreshing = refreshState)
     }
 
     private fun refresh(disposables: CompositeDisposable, searchInfo: SearchInfo): LiveData<Boolean> {
