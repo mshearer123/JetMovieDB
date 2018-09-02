@@ -1,20 +1,26 @@
 package com.shearer.jetmoviedb.features.movie.repository
 
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
 import com.shearer.jetmoviedb.createGenreDto
 import com.shearer.jetmoviedb.createPopularMoviesDto
+import com.shearer.jetmoviedb.features.movie.db.MovieDb
 import io.reactivex.Single
 import org.junit.Test
 
 class MovieRepositoryDefaultTest {
 
+
+    private val dbDao = mock<MovieDb>()
     private val dao = mock<MovieDbApi.Dao> {
         on { getPopularMovies(any()) } doReturn Single.just(createPopularMoviesDto())
         on { getMovieGenres() } doReturn Single.just(createGenreDto())
     }
 
-    private val repository = MovieRepositoryDefault(dao)
+    private val repository = MovieRepositoryDefault(dao, dbDao)
 
     @Test
     fun getGenres_callsDao() {
@@ -35,20 +41,4 @@ class MovieRepositoryDefaultTest {
         }
     }
 
-    @Test
-    fun getPopular_callsDao() {
-        repository.getPopular(1).blockingGet()
-
-        verify(dao).getPopularMovies(1)
-    }
-
-    @Test
-    fun getPopular_callsGenresPriorToMovies() {
-        repository.getPopular(1).blockingGet()
-
-        inOrder(dao) {
-            verify(dao).getMovieGenres()
-            verify(dao).getPopularMovies(1)
-        }
-    }
 }

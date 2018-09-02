@@ -1,26 +1,27 @@
 package com.shearer.jetmoviedb.features.movie.interactor
 
-import com.nhaarman.mockito_kotlin.any
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import com.shearer.jetmoviedb.createPopularMovies
+import com.shearer.jetmoviedb.features.movie.domain.Movie
 import com.shearer.jetmoviedb.features.movie.repository.MovieRepository
-import io.reactivex.Single
 import org.junit.Test
 
 class MovieInteractorDefaultTest {
 
+    private val mockLiveData = mock<LiveData<PagedList<Movie>>>()
     private val repository = mock<MovieRepository> {
-        on { getPopular(any()) } doReturn Single.just(createPopularMovies())
+        on { getPopular() } doReturn mockLiveData
     }
 
     private val interactor = MovieInteractorDefault(repository)
 
     @Test
     fun getPopular_callsRepository() {
-        interactor.getPopular(1)
+        interactor.getPopular()
 
-        verify(repository).getPopular(1)
+        verify(repository).getPopular()
     }
 }
