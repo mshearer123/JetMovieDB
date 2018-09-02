@@ -5,7 +5,6 @@ import androidx.paging.PagedList
 import com.shearer.jetmoviedb.features.movie.domain.Movie
 import com.shearer.jetmoviedb.features.movie.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.repository.MovieRepository
-import com.shearer.jetmoviedb.shared.extensions.applySchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import java.util.concurrent.Executors
@@ -21,7 +20,16 @@ class MovieBoundaryCallback(private val disposables: CompositeDisposable,
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) { callback ->
             disposables += movieRepository.getPopular(1)
-                    .applySchedulers()
+                    .subscribe({
+                        handleSuccess(it, callback)
+                    }, callback::recordFailure)
+        }
+    }
+
+    override fun onItemAtEndLoaded(itemAtEnd: Movie) {
+        val nextPage = itemAtEnd.page + 1
+        helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) { callback ->
+            disposables += movieRepository.getPopular(nextPage.toLong())
                     .subscribe({
                         handleSuccess(it, callback)
                     }, callback::recordFailure)
@@ -32,17 +40,6 @@ class MovieBoundaryCallback(private val disposables: CompositeDisposable,
         ioExecutor.execute {
             handleResponse(movieResults)
             callback.recordSuccess()
-        }
-    }
-
-    override fun onItemAtEndLoaded(itemAtEnd: Movie) {
-        val nextPage = itemAtEnd.page + 1
-        helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) { callback ->
-            disposables += movieRepository.getPopular(nextPage.toLong())
-                    .applySchedulers()
-                    .subscribe({
-                        handleSuccess(it, callback)
-                    }, callback::recordFailure)
         }
     }
 }
