@@ -15,8 +15,8 @@ data class Movie(
         val popularity: String,
         @SerializedName("releaseYear")
         val releaseYear: String,
-        @SerializedName("thumbnailUrl")
-        val thumbnailUrl: String) {
+        @SerializedName("url")
+        val url: String?) {
     var page: Int = -1
 }
 

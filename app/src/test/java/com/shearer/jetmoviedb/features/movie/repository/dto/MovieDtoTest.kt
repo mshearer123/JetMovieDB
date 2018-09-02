@@ -33,6 +33,6 @@ class MovieDtoTest {
 
     @Test
     fun toMovie_convertsToMovie_resolvesPosterPath() {
-        assertThat(movie.thumbnailUrl).isEqualTo("/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
+        assertThat(movie.url).isEqualTo("/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
     }
 }

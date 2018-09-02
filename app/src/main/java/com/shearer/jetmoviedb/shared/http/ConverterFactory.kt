@@ -30,9 +30,7 @@ class ConverterFactory : Converter.Factory() {
     }
 
     private companion object {
-        private val GSON: Gson = GsonBuilder()
-                .setDateFormat("yyyy-MM-dd")
-                .create()
+        private val GSON: Gson = GsonBuilder().create()
     }
 }
 

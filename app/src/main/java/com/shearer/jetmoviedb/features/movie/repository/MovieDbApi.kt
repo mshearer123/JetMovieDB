@@ -13,6 +13,9 @@ class MovieDbApi {
         @GET("movie/popular")
         fun getPopularMovies(@Query("page") page: Long): Single<MovieResultDto>
 
+        @GET("search/movie")
+        fun searchMovies(@Query("page") page: Long, @Query("query") query: String): Single<MovieResultDto>
+
         @GET("genre/movie/list")
         fun getMovieGenres(@Query("language") page: String = "en-US"): Single<GenreResultDto>
     }
