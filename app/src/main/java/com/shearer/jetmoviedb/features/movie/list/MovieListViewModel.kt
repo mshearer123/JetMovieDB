@@ -17,9 +17,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     val movies = switchMap(result) { it.pagedList }!!
     val refreshing = switchMap(result) { it.refreshing }!!
 
-
-    var switch = false
-
     init {
         searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
     }
@@ -37,13 +34,8 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
 
     }
 
-    fun onSearchClicked() {
-        if (switch)  {
-            searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
-        }  else {
-            searchTerm.value = SearchInfo(SearchInfo.Type.SEARCH, "king kong")
-        }
-        switch = !switch
+    fun onSearchClicked(searchString: String) {
+        searchTerm.value = SearchInfo(SearchInfo.Type.SEARCH, searchString)
     }
 
     fun onSearch(searchTerm: String) {
