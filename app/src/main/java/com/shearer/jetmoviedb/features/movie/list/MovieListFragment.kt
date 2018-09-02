@@ -30,7 +30,10 @@ class MovieListFragment : Fragment() {
         }
 
         swipeToRefreshLayout.setOnRefreshListener(movieListViewModel::onRefresh)
-        searchFAB.setOnClickListener { movieListViewModel.onSearchClicked() }
+        searchFAB.setOnClickListener {
+            movieListViewModel.onSearchClicked()
+            recyclerView.scrollToPosition(0)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

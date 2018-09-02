@@ -22,8 +22,6 @@ class MovieBoundaryCallback(private val disposables: CompositeDisposable,
 
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) { callback ->
-
-
             when (searchInfo.type) {
                 SearchInfo.Type.POPULAR -> {
                     disposables += movieRepository.getPopular(1)
@@ -40,8 +38,6 @@ class MovieBoundaryCallback(private val disposables: CompositeDisposable,
                             }, callback::recordFailure)
                 }
             }
-
-
         }
     }
 

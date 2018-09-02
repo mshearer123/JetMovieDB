@@ -22,7 +22,6 @@ class MovieListPagingAdapter(private val itemClickListener: (Int) -> Unit
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val titleTextView = itemView.movieTitle
         private val genreTextView = itemView.movieGenre
         private val popularityTextView = itemView.moviePopularity

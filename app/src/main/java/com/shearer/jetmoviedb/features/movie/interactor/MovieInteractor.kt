@@ -36,9 +36,7 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
             }
         }
 
-
         val builder = LivePagedListBuilder(dataSourceFactory, MovieDbConstants.pageCount).setBoundaryCallback(callback)
-
         val refreshTrigger = MutableLiveData<Unit>()
         val refreshState = Transformations.switchMap(refreshTrigger) {
             refresh(disposables, searchInfo)
@@ -49,17 +47,36 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
     private fun refresh(disposables: CompositeDisposable, searchInfo: SearchInfo): LiveData<Boolean> {
         val refreshingState = MutableLiveData<Boolean>()
 
-
-        val movieSingle = when (searchInfo.type) {
-            SearchInfo.Type.SEARCH -> {
-                movieRepository.getMoviesBySearchTerm(1, searchInfo.term!!)
+        when (searchInfo.type) {
+            SearchInfo.Type.POPULAR -> {
+                disposables += movieRepository.getPopular(1)
+                        .applyIoSchedulers()
+                        .subscribe({
+                            dbDao.runInTransaction {
+                                dbDao.movies().deleteByType("popular")
+                                insertMoviesInDatabase(it, searchInfo)
+                                refreshingState.value = false
+                            }
+                        }, {
+                            refreshingState.value = false
+                        })
             }
-            else -> {
-                movieRepository.getPopular(1)
+            SearchInfo.Type.SEARCH -> {
+                disposables += movieRepository.getMoviesBySearchTerm(1, searchInfo.term!!)
+                        .applyIoSchedulers()
+                        .subscribe({
+                            dbDao.runInTransaction {
+                                dbDao.movies().deleteByType(searchInfo.term!!)
+                                insertMoviesInDatabase(it, searchInfo)
+                                refreshingState.value = false
+                            }
+                        }, {
+                            refreshingState.value = false
+                        })
             }
         }
 
-        disposables += movieSingle
+        disposables += movieRepository.getMoviesBySearchTerm(1, searchInfo.term!!)
                 .applyIoSchedulers()
                 .subscribe({
                     dbDao.runInTransaction {
