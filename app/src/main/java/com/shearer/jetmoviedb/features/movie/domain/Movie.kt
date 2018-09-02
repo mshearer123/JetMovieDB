@@ -16,7 +16,11 @@ data class Movie(
         @SerializedName("releaseYear")
         val releaseYear: String,
         @SerializedName("url")
-        val url: String?) {
+        val url: String?,
+        @SerializedName("type")
+        val type: String,
+        @SerializedName("id")
+        val id: Int) {
     var page: Int = -1
 }
 

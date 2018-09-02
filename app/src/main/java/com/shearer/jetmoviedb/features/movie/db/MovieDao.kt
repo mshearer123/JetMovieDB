@@ -12,13 +12,13 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(movies: List<Movie>)
 
-    @Query("SELECT * FROM movies")
-    fun movies(): DataSource.Factory<Int, Movie>
+    @Query("SELECT * FROM movies WHERE type = :type")
+    fun moviesByType(type: String): DataSource.Factory<Int, Movie>
 
-    @Query("DELETE FROM movies")
-    fun delete()
+    @Query("DELETE FROM movies WHERE type = :type")
+    fun deleteByType(type: String)
 
-    @Query("SELECT MAX(page) + 1 FROM movies")
-    fun getNexPage(): Int
+    @Query("SELECT MAX(page) FROM movies WHERE type = :type")
+    fun getPageByType(type: String): Int
 
 }

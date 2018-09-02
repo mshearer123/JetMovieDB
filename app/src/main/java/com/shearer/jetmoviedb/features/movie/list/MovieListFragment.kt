@@ -28,14 +28,14 @@ class MovieListFragment : Fragment() {
             adapter = movieAdapter
             setHasFixedSize(true)
         }
+
         swipeToRefreshLayout.setOnRefreshListener(movieListViewModel::onRefresh)
+        searchFAB.setOnClickListener { movieListViewModel.onSearchClicked() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.moviesLiveData.observeNotNull(this) { it ->
-            swipeToRefreshLayout.isRefreshing = it.isEmpty()
-            movieAdapter.submitList(it)
-        }
+        movieListViewModel.movies.observeNotNull(this) { movieAdapter.submitList(it) }
+        movieListViewModel.refreshing.observeNotNull(this) { swipeToRefreshLayout.isRefreshing = it }
     }
 }
