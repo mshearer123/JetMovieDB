@@ -1,7 +1,22 @@
 package com.shearer.jetmoviedb.features.movie.domain
 
-data class Movie(val title: String,
-                 val genres: String,
-                 val popularity: String,
-                 val releaseYear: String,
-                 val thumbnailUrl: String)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+
+@Entity(tableName = "movies")
+data class Movie(
+        @PrimaryKey
+        @SerializedName("title")
+        val title: String,
+        @SerializedName("genres")
+        val genres: String,
+        @SerializedName("popularity")
+        val popularity: String,
+        @SerializedName("releaseYear")
+        val releaseYear: String,
+        @SerializedName("thumbnailUrl")
+        val thumbnailUrl: String) {
+    var page: Int = -1
+}
+

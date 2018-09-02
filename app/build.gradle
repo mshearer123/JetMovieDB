@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -47,6 +49,7 @@ ext {
     koin_version = '1.0.0-alpha-11'
     retrofit_version = '2.4.0'
     stetho_version = '1.5.0'
+    room_version = '2.0.0-rc01'
 }
 
 dependencies {
@@ -55,10 +58,16 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0-rc02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
+    implementation 'androidx.paging:paging-common:2.0.0-rc01'
     implementation 'androidx.paging:paging-runtime:2.0.0-rc01'
     implementation 'androidx.palette:palette:1.0.0-rc02'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
     implementation 'com.google.android.material:material:1.0.0-rc01'
+
+    // room - https://developer.android.com/training/data-storage/room/
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // retrofit - https://square.github.io/retrofit/
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

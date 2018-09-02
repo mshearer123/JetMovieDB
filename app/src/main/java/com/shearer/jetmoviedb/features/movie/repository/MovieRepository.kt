@@ -11,16 +11,16 @@ interface MovieRepository {
 
 class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository {
 
-    private lateinit var genres: Map<Int, String>
+    private val genres = mutableMapOf<Int, String>()
 
     override fun getGenres(): Single<Map<Int, String>> {
-        return if (::genres.isInitialized) {
-            just(genres)
-        } else {
+        return if (genres.isEmpty()) {
             dao.getMovieGenres().map {
-                genres = it.toGenres()
+                genres.putAll(it.toGenres())
                 return@map genres
             }
+        } else {
+            just(genres)
         }
     }
 
