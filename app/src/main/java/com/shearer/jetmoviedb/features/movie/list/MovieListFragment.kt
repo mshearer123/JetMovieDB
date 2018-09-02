@@ -66,6 +66,5 @@ class MovieListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         movieListViewModel.movies.observeNotNull(this) { movieAdapter.submitList(it) }
-        movieListViewModel.refreshing.observeNotNull(this) { swipeToRefreshLayout.isRefreshing = it }
     }
 }

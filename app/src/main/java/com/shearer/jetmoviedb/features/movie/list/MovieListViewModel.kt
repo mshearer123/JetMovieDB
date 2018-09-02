@@ -15,7 +15,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     }
 
     val movies = switchMap(result) { it.pagedList }!!
-    val refreshing = switchMap(result) { it.refreshing }!!
 
     init {
         searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
