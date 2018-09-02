@@ -14,8 +14,11 @@ import org.koin.dsl.module.module
 
 val movieModule = module {
     single { Room.databaseBuilder(get(), MovieDb::class.java, "movie-db").build() }
-    factory { MovieRepositoryDefault(get(), get()) as MovieRepository }
-    factory { MovieInteractorDefault(get()) as MovieInteractor }
+
+
+
+    factory { MovieRepositoryDefault(get()) as MovieRepository }
+    factory { MovieInteractorDefault(get(), get()) as MovieInteractor }
     factory { RestServiceDefault(get()).createMovieApi() }
 
     viewModel {

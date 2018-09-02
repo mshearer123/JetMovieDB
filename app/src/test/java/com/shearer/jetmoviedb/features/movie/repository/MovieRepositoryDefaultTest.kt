@@ -20,7 +20,7 @@ class MovieRepositoryDefaultTest {
         on { getMovieGenres() } doReturn Single.just(createGenreDto())
     }
 
-    private val repository = MovieRepositoryDefault(dao, dbDao)
+    private val repository = MovieRepositoryDefault(dao)
 
     @Test
     fun getGenres_callsDao() {

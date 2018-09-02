@@ -10,17 +10,10 @@ import io.reactivex.disposables.CompositeDisposable
 class MovieListViewModel(movieInteractor: MovieInteractor) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-//    private val popularMovieDataFactory = MovieDataFactory(movieInteractor, compositeDisposable)
     var moviesLiveData: LiveData<PagedList<Movie>>
 
     init {
-//        val pagingConfig = PagedList.Config.Builder()
-//                .setEnablePlaceholders(false)
-//                .setInitialLoadSizeHint(20)
-//                .setPageSize(20)
-//                .build()
-
-        moviesLiveData = movieInteractor.getPopular()
+        moviesLiveData = movieInteractor.getPopular(compositeDisposable)
     }
 
     override fun onCleared() {
@@ -32,6 +25,4 @@ class MovieListViewModel(movieInteractor: MovieInteractor) : ViewModel() {
     public fun onMovieClicked(index: Int) {
 
     }
-
-
 }

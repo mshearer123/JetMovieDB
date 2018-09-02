@@ -1,49 +1,34 @@
 package com.shearer.jetmoviedb.features.movie.repository
 
-import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import com.shearer.jetmoviedb.features.movie.db.MovieDb
-import com.shearer.jetmoviedb.features.movie.domain.Movie
+import com.shearer.jetmoviedb.features.movie.domain.MovieResults
 import io.reactivex.Single
 import io.reactivex.Single.just
-import java.util.concurrent.Executors.newSingleThreadExecutor
 
 interface MovieRepository {
     fun getGenres(): Single<Map<Int, String>>
-    fun getPopular(): LiveData<PagedList<Movie>>
+    fun getPopular(page: Long): Single<MovieResults>
 }
 
-class MovieRepositoryDefault(private val dao: MovieDbApi.Dao, private val dbDao: MovieDb) : MovieRepository {
+class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository {
 
-    private lateinit var genres: Map<Int, String>
-
+    private val genres = mutableMapOf<Int, String>()
 
     override fun getGenres(): Single<Map<Int, String>> {
-        return if (::genres.isInitialized) {
-            just(genres)
-        } else {
+        return if (genres.isEmpty()) {
             dao.getMovieGenres().map {
-                genres = it.toGenres()
+                genres.putAll(it.toGenres())
                 return@map genres
             }
+        } else {
+            just(genres)
         }
     }
 
-    override fun getPopular(): LiveData<PagedList<Movie>> {
-        val callback = MovieBoundaryCallback(dao, newSingleThreadExecutor(), ::insertMoviesIntoDb)
-        val dataSourceFactory = dbDao.movies().movies()
-        val builder = LivePagedListBuilder(dataSourceFactory, 20).setBoundaryCallback(callback)
-        return builder.build()
-    }
-
-    private fun insertMoviesIntoDb(movies: List<Movie>) {
-        dbDao.runInTransaction {
-            val nextPage = dbDao.movies().getNexPage()
-            dbDao.movies().insert(movies.map {
-                it.page = nextPage
-                it
-            })
+    override fun getPopular(page: Long): Single<MovieResults> {
+        return getGenres().flatMap { genres ->
+            dao.getPopularMovies(page).map {
+                it.toMovies(genres)
+            }
         }
     }
 }
