@@ -9,18 +9,20 @@
 
     <androidx.cardview.widget.CardView
             android:id="@+id/moviePosterContainer"
-            android:layout_width="75dp"
-            android:layout_height="125dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/half_keyline"
+            android:padding="4dp"
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
                 android:id="@+id/moviePosterImageView"
-                android:layout_width="75dp"
-                android:layout_height="125dp"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
                 android:transitionName="moviePoster"
                 />
     </androidx.cardview.widget.CardView>
