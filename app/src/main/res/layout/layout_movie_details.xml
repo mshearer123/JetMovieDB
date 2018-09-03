@@ -20,8 +20,8 @@
 
         <ImageView
                 android:id="@+id/moviePosterImageView"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/poster_image_width"
+                android:layout_height="@dimen/poster_image_height"
                 android:layout_gravity="center"
                 android:transitionName="moviePoster"
                 />
@@ -44,7 +44,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/first_keyline"
-            android:text="@string/lorem"
             android:textAppearance="@style/Body2Grey3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

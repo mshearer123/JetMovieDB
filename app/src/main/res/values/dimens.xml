@@ -2,4 +2,7 @@
 <resources>
     <dimen name="first_keyline">16dp</dimen>
     <dimen name="half_keyline">8dp</dimen>
+
+    <dimen name="poster_image_width">80dp</dimen>
+    <dimen name="poster_image_height">100dp</dimen>
 </resources>

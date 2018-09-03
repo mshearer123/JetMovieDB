@@ -14,11 +14,11 @@
 
     <ImageView
             android:id="@+id/moviePoster"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/poster_image_width"
+            android:layout_height="@dimen/poster_image_height"
+            android:transitionName="moviePoster"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:transitionName="moviePoster"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView

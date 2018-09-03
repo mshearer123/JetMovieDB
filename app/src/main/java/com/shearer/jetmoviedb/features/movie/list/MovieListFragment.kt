@@ -47,6 +47,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         movieListViewModel.pagedListLiveData.observe(this, Observer {
+            recyclerView.scrollToPosition(0)
             movieAdapter.submitList(it)
         })
         movieListViewModel.isLoading.observe(this, Observer {

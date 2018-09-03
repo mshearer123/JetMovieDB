@@ -46,7 +46,9 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor, private v
 
     fun loadMore() {
         compositeDisposable += movieInteractor.getMovies(searchInfo)
-                .doOnSuccess { movieRepository.insertMoviesInDatabase(searchInfo, it) }
+                .doOnSuccess {
+                    movieRepository.insertMoviesInDatabase(searchInfo, it)
+                }
                 .applySchedulers()
                 .subscribe({
                     if (it.page == it.totalPages) {
