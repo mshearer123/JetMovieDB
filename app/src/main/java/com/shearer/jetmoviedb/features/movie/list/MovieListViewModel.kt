@@ -8,6 +8,7 @@ import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
+
     private val compositeDisposable = CompositeDisposable()
     private val searchTerm = MutableLiveData<SearchInfo>()
     private val result = map(searchTerm) {
@@ -31,10 +32,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
 
     fun onMovieClicked(index: Int) {
 
-    }
-
-    fun onPopularClicked() {
-        searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
     }
 
     fun onSearchClicked(searchString: String) {
