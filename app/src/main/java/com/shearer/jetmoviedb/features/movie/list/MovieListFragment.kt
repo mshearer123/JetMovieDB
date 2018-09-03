@@ -1,28 +1,28 @@
 package com.shearer.jetmoviedb.features.movie.list
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat.getTransitionName
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.paginate.Paginate
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.detail.MovieDetailActivity
-import com.shearer.jetmoviedb.shared.extensions.observeNotNull
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), Paginate.Callbacks {
 
+    private var isLoading = false
+    private var hasCompleted = false
     private val movieListViewModel: MovieListViewModel by viewModel()
 
     private val movieAdapter by lazy {
@@ -35,31 +35,39 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getString("SEARCH")?.let { movieListViewModel.searchTerm(it) } ?: movieListViewModel.popular()
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
             setHasFixedSize(true)
         }
-
-        editText.setOnEditorActionListener { textView, actionId, keyEvent ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                movieListViewModel.onSearchClicked(textView.text.toString())
-                recyclerView.scrollToPosition(0)
-                editText.clearFocus()
-                hideKeyboard()
-                return@setOnEditorActionListener true
-            }
-
-            return@setOnEditorActionListener false
-        }
+        Paginate.with(recyclerView, this).build()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.movies.observeNotNull(this) { movieAdapter.submitList(it) }
-        movieListViewModel.launchDetail.observeNotNull(this) {
+        movieListViewModel.pagedListLiveData.observe(this, Observer {
+            movieAdapter.submitList(it)
+        })
+        movieListViewModel.isLoading.observe(this, Observer {
+            isLoading = it
+        })
+        movieListViewModel.hasCompleted.observe(this, Observer {
+            hasCompleted = it
+        })
+    }
 
+    override fun onLoadMore() {
+        if (!isLoading) {
+            isLoading = true
+            movieListViewModel.loadMore()
         }
+    }
+
+    override fun isLoading() = isLoading
+
+    override fun hasLoadedAllItems(): Boolean {
+        return hasCompleted
     }
 
     private fun launchDetails(imageView: ImageView, movie: Movie) {
@@ -72,8 +80,5 @@ class MovieListFragment : Fragment() {
         } ?: throw RuntimeException("transition name missing from imageView")
     }
 
-    private fun hideKeyboard() {
-        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(editText.windowToken, 0)
-    }
+
 }
