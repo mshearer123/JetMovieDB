@@ -33,38 +33,26 @@ class MovieListFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        swipeToRefreshLayout.setOnRefreshListener(movieListViewModel::onRefresh)
-        searchFAB.setOnClickListener {
-            editText.visibility = View.VISIBLE
-            editText.requestFocus()
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, 0)
-        }
-
         editText.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 movieListViewModel.onSearchClicked(textView.text.toString())
                 recyclerView.scrollToPosition(0)
-                editText.setText("")
-                editText.visibility = View.GONE
-                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(editText.windowToken, 0)
-                popularChip.visibility = View.VISIBLE
+                editText.clearFocus()
+                hideKeyboard()
                 return@setOnEditorActionListener true
             }
 
             return@setOnEditorActionListener false
         }
-
-        popularChip.setOnClickListener {
-            popularChip.visibility = View.GONE
-            movieListViewModel.onPopularClicked()
-        }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         movieListViewModel.movies.observeNotNull(this) { movieAdapter.submitList(it) }
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 }
