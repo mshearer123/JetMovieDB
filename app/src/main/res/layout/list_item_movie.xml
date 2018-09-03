@@ -8,7 +8,7 @@
         android:layout_marginEnd="@dimen/half_keyline"
         android:layout_marginStart="@dimen/half_keyline"
         android:layout_marginTop="@dimen/half_keyline"
-        android:background="@color/white"
+        android:background="@color/background_blue1"
         android:elevation="4dp"
         android:foreground="?selectableItemBackground">
 
