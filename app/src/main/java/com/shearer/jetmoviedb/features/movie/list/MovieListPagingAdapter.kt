@@ -6,7 +6,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shearer.jetmoviedb.R
-import com.shearer.jetmoviedb.features.movie.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.shared.extensions.getString
 import com.shearer.jetmoviedb.shared.extensions.inflate
 import com.squareup.picasso.Picasso
@@ -22,7 +22,6 @@ class MovieListPagingAdapter(private val itemClickListener: (Int) -> Unit
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val titleTextView = itemView.movieTitle
         private val genreTextView = itemView.movieGenre
         private val popularityTextView = itemView.moviePopularity
@@ -32,7 +31,7 @@ class MovieListPagingAdapter(private val itemClickListener: (Int) -> Unit
             titleTextView.text = getString(R.string.movie_title, movie.title, movie.releaseYear)
             genreTextView.text = movie.genres
             popularityTextView.text = movie.popularity
-            Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.thumbnailUrl).fit().into(posterImageView)
+            movie.url?.let { Picasso.get().load("https://image.tmdb.org/t/p/w342/$it").fit().into(posterImageView) }
             itemView.setOnClickListener {
                 itemClickListener(adapterPosition)
             }

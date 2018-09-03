@@ -1,15 +1,19 @@
 package com.shearer.jetmoviedb.features.movie.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.shared.extensions.observeNotNull
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MovieListFragment : Fragment() {
 
@@ -28,14 +32,27 @@ class MovieListFragment : Fragment() {
             adapter = movieAdapter
             setHasFixedSize(true)
         }
-        swipeToRefreshLayout.setOnRefreshListener(movieListViewModel::onRefresh)
+
+        editText.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                movieListViewModel.onSearchClicked(textView.text.toString())
+                recyclerView.scrollToPosition(0)
+                editText.clearFocus()
+                hideKeyboard()
+                return@setOnEditorActionListener true
+            }
+
+            return@setOnEditorActionListener false
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.moviesLiveData.observeNotNull(this) { it ->
-            swipeToRefreshLayout.isRefreshing = it.isEmpty()
-            movieAdapter.submitList(it)
-        }
+        movieListViewModel.movies.observeNotNull(this) { movieAdapter.submitList(it) }
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 }

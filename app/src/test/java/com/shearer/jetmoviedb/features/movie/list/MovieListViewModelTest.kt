@@ -3,8 +3,8 @@ package com.shearer.jetmoviedb.features.movie.list
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.nhaarman.mockito_kotlin.mock
-import com.shearer.jetmoviedb.features.movie.domain.Movie
-import com.shearer.jetmoviedb.features.movie.interactor.MovieInteractor
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 
 class MovieListViewModelTest {
 

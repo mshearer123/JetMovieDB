@@ -1,19 +1,24 @@
 package com.shearer.jetmoviedb.features.movie.list
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
-import com.shearer.jetmoviedb.features.movie.domain.Movie
-import com.shearer.jetmoviedb.features.movie.interactor.MovieInteractor
+import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    var moviesLiveData: LiveData<PagedList<Movie>>
+    private val searchTerm = MutableLiveData<SearchInfo>()
+    private val result = map(searchTerm) {
+        movieInteractor.getMovies(it, compositeDisposable)
+    }
+
+    val movies = switchMap(result) { it.pagedList }!!
 
     init {
-        moviesLiveData = movieInteractor.getPopular(compositeDisposable)
+        searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
     }
 
     override fun onCleared() {
@@ -22,10 +27,15 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     }
 
     fun onRefresh() {
-        moviesLiveData = movieInteractor.getPopular(compositeDisposable, refresh = true)
+
     }
 
     fun onMovieClicked(index: Int) {
 
     }
+
+    fun onSearchClicked(searchString: String) {
+        searchTerm.value = SearchInfo(SearchInfo.Type.SEARCH, searchString)
+    }
+
 }
