@@ -16,8 +16,8 @@ data class Movie(
         val popularity: String,
         @SerializedName("releaseYear")
         val releaseYear: String,
-        @SerializedName("url")
-        val url: String,
+        @SerializedName("posterUrl")
+        val posterUrl: String,
         @SerializedName("type")
         val type: String,
         @SerializedName("id")

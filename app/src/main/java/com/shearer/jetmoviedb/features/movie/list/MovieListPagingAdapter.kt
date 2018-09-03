@@ -32,7 +32,7 @@ class MovieListPagingAdapter(private val itemClickListener: (ImageView, Movie) -
             titleTextView.text = getString(R.string.movie_title, movie.title, movie.releaseYear)
             genreTextView.text = movie.genres
             popularityTextView.text = movie.popularity
-            Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.url).fit().into(posterImageView)
+            Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.posterUrl).fit().into(posterImageView)
             itemView.setOnClickListener {
                 itemClickListener(posterImageView, movie)
             }

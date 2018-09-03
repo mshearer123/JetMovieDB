@@ -19,7 +19,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
         val movie = intent.getSerializableExtra(Movie.TAG) as Movie
-        Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.url).fit().noFade().into(moviePosterImageView)
+        Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.posterUrl).fit().noFade().into(moviePosterImageView)
         model.launchMovie(movie)
 
         model.backgroundPoster.observe(this, Observer {

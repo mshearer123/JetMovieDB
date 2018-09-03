@@ -30,11 +30,11 @@
 
     <TextView
             android:id="@+id/titleTextView"
-            android:layout_marginTop="@dimen/first_keyline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
+            android:layout_marginTop="@dimen/first_keyline"
             android:textAppearance="@style/Body2Grey3.Bold"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
-            android:textAppearance="@style/Body1Grey2"
+            android:layout_marginTop="@dimen/half_keyline"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"
