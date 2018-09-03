@@ -25,6 +25,9 @@ class MovieDetailActivity : AppCompatActivity() {
         model.backgroundPoster.observe(this, Observer {
             Picasso.get().load("https://image.tmdb.org/t/p/w780/" + it).fit().into(movieBackgroundImageView)
         })
+
+        model.title.observe(this, Observer { titleTextView.text = it })
+        model.overview.observe(this, Observer { overviewTextView.text = it })
         model.runtime.observe(this, Observer { runtimeTextView.text = it })
         model.revenue.observe(this, Observer { revenueTextView.text = it })
         model.language.observe(this, Observer { languageTextView.text = it })

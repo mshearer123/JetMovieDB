@@ -28,22 +28,38 @@
                 />
     </androidx.cardview.widget.CardView>
 
+    <TextView
+            android:id="@+id/titleTextView"
+            android:layout_marginTop="@dimen/first_keyline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:textAppearance="@style/Body2Grey3.Bold"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Move title"/>
 
     <TextView
             android:id="@+id/runtimeTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Body2Grey3"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
             tools:text="Runtime 800min"/>
 
     <TextView
             android:id="@+id/revenueTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Body2Grey3"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/runtimeTextView"
@@ -53,7 +69,9 @@
             android:id="@+id/languageTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Body2Grey3"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/revenueTextView"
@@ -64,7 +82,10 @@
             android:id="@+id/linkTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Body2Grey3"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:autoLink="web"
+            android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/languageTextView"
@@ -73,11 +94,11 @@
     <TextView
             android:id="@+id/overviewTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/first_keyline"
-            android:textAppearance="@style/Body2Grey3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:layout_marginStart="@dimen/first_keyline"
+            android:textAppearance="@style/Body1Grey2"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"
             tools:text="overview"/>

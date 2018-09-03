@@ -15,6 +15,8 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
     private val compositeDisposable = CompositeDisposable()
     var backgroundPoster = MutableLiveData<String>()
     var poster = MutableLiveData<String>()
+    var title = MutableLiveData<String>()
+    var overview = MutableLiveData<String>()
     var revenue = MutableLiveData<String>()
     var runtime = MutableLiveData<String>()
     var language = MutableLiveData<String>()
@@ -35,9 +37,12 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
     private fun movieDetailSuccess(movieDetail: MovieDetail) {
         backgroundPoster.value = movieDetail.backdropPath
         poster.value = movie.url
+        title.value = movie.title
+        overview.value = movieDetail.overview
         revenue.value = movieDetail.revenue.toString()
         runtime.value = movieDetail.runtime.toString()
         language.value = movieDetail.languages.joinToString { it }
+        link.value = movieDetail.homePage
     }
 
     private fun movieDetailError(throwable: Throwable) {
