@@ -11,10 +11,17 @@ import io.reactivex.rxkotlin.plusAssign
 
 class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
+    lateinit var movie: Movie
     private val compositeDisposable = CompositeDisposable()
     var backgroundPoster = MutableLiveData<String>()
+    var poster = MutableLiveData<String>()
+    var revenue = MutableLiveData<String>()
+    var runtime = MutableLiveData<String>()
+    var language = MutableLiveData<String>()
+    var link = MutableLiveData<String>()
 
     fun launchMovie(movie: Movie) {
+        this.movie = movie
         compositeDisposable += movieInteractor.getMovieDetails(movie.id)
                 .applySchedulers()
                 .subscribe(::movieDetailSuccess, ::movieDetailError)
@@ -27,6 +34,10 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
 
     private fun movieDetailSuccess(movieDetail: MovieDetail) {
         backgroundPoster.value = movieDetail.backdropPath
+        poster.value = movie.url
+        revenue.value = movieDetail.revenue.toString()
+        runtime.value = movieDetail.runtime.toString()
+        language.value = movieDetail.languages.joinToString { it }
     }
 
     private fun movieDetailError(throwable: Throwable) {

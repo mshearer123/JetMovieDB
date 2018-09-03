@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val model: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                mainViewModel.onTextEntered(editText.text.toString())
+                model.onTextEntered(editText.text.toString())
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
         }
-        mainViewModel.searchFocus.observe(this, Observer {
+        model.searchFocus.observe(this, Observer {
             if (it) {
 
             } else {
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 hideKeyboard()
             }
         })
-        mainViewModel.launchSearch.observe(this, Observer {
+        model.launchSearch.observe(this, Observer {
             val args = Bundle().apply { putString("SEARCH", it) }
             val fragment = MovieListFragment().apply { arguments = args }
             supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commitNow()

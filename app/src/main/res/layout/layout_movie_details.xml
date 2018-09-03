@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="4dp"
@@ -32,12 +33,42 @@
             android:id="@+id/runtimeTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/first_keyline"
-            android:text="Runtime 800min"
             android:textAppearance="@style/Body2Grey3"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Runtime 800min"/>
+
+    <TextView
+            android:id="@+id/revenueTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Body2Grey3"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/runtimeTextView"
+            tools:text="Revenue - $400"/>
+
+    <TextView
+            android:id="@+id/languageTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Body2Grey3"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/revenueTextView"
+
+            tools:text="Language - English"/>
+
+    <TextView
+            android:id="@+id/linkTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Body2Grey3"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/languageTextView"
+            tools:text="link"/>
 
     <TextView
             android:id="@+id/overviewTextView"
@@ -48,7 +79,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"/>
+            app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"
+            tools:text="overview"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,7 +23,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     private var isLoading = false
     private var hasCompleted = false
-    private val movieListViewModel: MovieListViewModel by viewModel()
+    private val model: MovieListViewModel by viewModel()
 
     private val movieAdapter by lazy {
         MovieListPagingAdapter(::launchDetails)
@@ -35,7 +35,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getString("SEARCH")?.let { movieListViewModel.searchTerm(it) } ?: movieListViewModel.popular()
+        arguments?.getString("SEARCH")?.let { model.searchTerm(it) } ?: model.popular()
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
@@ -46,14 +46,14 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        movieListViewModel.pagedListLiveData.observe(this, Observer {
+        model.pagedListLiveData.observe(this, Observer {
             recyclerView.scrollToPosition(0)
             movieAdapter.submitList(it)
         })
-        movieListViewModel.isLoading.observe(this, Observer {
+        model.isLoading.observe(this, Observer {
             isLoading = it
         })
-        movieListViewModel.hasCompleted.observe(this, Observer {
+        model.hasCompleted.observe(this, Observer {
             hasCompleted = it
         })
     }
@@ -61,7 +61,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
     override fun onLoadMore() {
         if (!isLoading) {
             isLoading = true
-            movieListViewModel.loadMore()
+            model.loadMore()
         }
     }
 
