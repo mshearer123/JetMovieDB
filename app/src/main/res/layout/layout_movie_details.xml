@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/moviePosterContainer"
+            android:layout_width="75dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/half_keyline"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+                android:id="@+id/moviePosterImageView"
+                android:layout_width="75dp"
+                android:layout_height="125dp"
+                android:transitionName="moviePoster"
+                />
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+            android:id="@+id/runtimeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/first_keyline"
+            android:text="Runtime 800min"
+            android:textAppearance="@style/Body2Grey3"
+            app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/overviewTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/first_keyline"
+            android:text="@string/lorem"
+            android:textAppearance="@style/Body2Grey3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

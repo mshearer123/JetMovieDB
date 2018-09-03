@@ -18,6 +18,7 @@
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:transitionName="moviePoster"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView

@@ -1,9 +1,12 @@
 package com.shearer.jetmoviedb.features.movie.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import io.reactivex.disposables.CompositeDisposable
 
@@ -15,7 +18,8 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
         movieInteractor.getMovies(it, compositeDisposable)
     }
 
-    val movies = switchMap(result) { it.pagedList }!!
+    val movies: LiveData<PagedList<Movie>> = switchMap(result) { it.pagedList }
+    val launchDetail = MutableLiveData<Int>()
 
     init {
         searchTerm.value = SearchInfo(SearchInfo.Type.POPULAR)
@@ -30,9 +34,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
 
     }
 
-    fun onMovieClicked(index: Int) {
-
-    }
 
     fun onSearchClicked(searchString: String) {
         searchTerm.value = SearchInfo(SearchInfo.Type.SEARCH, searchString)
