@@ -8,15 +8,15 @@ import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbRepository
 import com.shearer.jetmoviedb.features.movie.common.repository.MovieRepository
 import com.shearer.jetmoviedb.features.movie.list.ListConfig
 import com.shearer.jetmoviedb.features.movie.list.SearchConfig
+import com.shearer.jetmoviedb.shared.extensions.applyIoSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface MovieInteractor {
     fun getMovieDetails(id: Int): Single<MovieDetail>
     fun getMovies(config: ListConfig): Single<MovieResults>
-    fun getDataSource(config: ListConfig): DataSource.Factory<Int, Movie>
-    fun saveMovies(config: ListConfig, movieResults: MovieResults)
     fun deleteMovieCache(config: ListConfig): Completable
+    fun getDataSource(config: ListConfig): DataSource.Factory<Int, Movie>
 }
 
 class MovieInteractorDefault(private val movieRepository: MovieRepository, private val movieDbRepository: MovieDbRepository) : MovieInteractor {
@@ -30,17 +30,16 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
                 else -> {
                     movieRepository.getPopular(it)
                 }
-
             }
+        }.doOnSuccess {
+            movieDbRepository.insertMoviesInDatabase(config, it).applyIoSchedulers().subscribe()
         }
     }
 
     override fun getMovieDetails(id: Int): Single<MovieDetail> = movieRepository.getMovieDetails(id)
 
-    override fun getDataSource(config: ListConfig) = movieDbRepository.getMovieDataSource(config)
-
-    override fun saveMovies(config: ListConfig, movieResults: MovieResults) = movieDbRepository.insertMoviesInDatabase(config, movieResults)
-
     override fun deleteMovieCache(config: ListConfig) = movieDbRepository.deleteMovieCache(config)
+
+    override fun getDataSource(config: ListConfig) = movieDbRepository.getMovieDataSource(config)
 
 }

@@ -41,14 +41,10 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     fun popular() {
         val dataSourceFactory = movieInteractor.getDataSource(listConfig)
         pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
-
     }
 
     fun loadMore() {
         compositeDisposable += movieInteractor.getMovies(listConfig)
-                .doOnSuccess {
-                    movieInteractor.saveMovies(listConfig, it)
-                }
                 .applySchedulers()
                 .subscribe({
                     if (it.page == it.totalPages) {
@@ -59,7 +55,6 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
                     isLoading.value = false
                 })
     }
-
 
     fun refresh() {
         isRefreshing.value = true

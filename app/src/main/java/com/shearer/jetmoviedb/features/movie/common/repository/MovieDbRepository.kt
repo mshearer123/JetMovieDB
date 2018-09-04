@@ -9,10 +9,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface MovieDbRepository {
-    fun insertMoviesInDatabase(config: ListConfig, movieResults: MovieResults)
-    fun getMovieDataSource(config: ListConfig): DataSource.Factory<Int, Movie>
+    fun insertMoviesInDatabase(config: ListConfig, movieResults: MovieResults): Completable
     fun getNextPage(config: ListConfig): Single<Long>
     fun deleteMovieCache(config: ListConfig): Completable
+    fun getMovieDataSource(config: ListConfig): DataSource.Factory<Int, Movie>
 }
 
 class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
@@ -22,8 +22,8 @@ class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
         }
     }
 
-    override fun insertMoviesInDatabase(config: ListConfig, movieResults: MovieResults) {
-        dbDao.runInTransaction {
+    override fun insertMoviesInDatabase(config: ListConfig, movieResults: MovieResults): Completable {
+        return Completable.fromCallable {
             val nextPage = dbDao.movies().getPageByType(config.getType()) + 1
             val movies = movieResults.movies.map {
                 it.type = config.getType()
@@ -34,11 +34,12 @@ class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
         }
     }
 
-    override fun getMovieDataSource(config: ListConfig) = dbDao.movies().moviesByType(config.getType())
-
     override fun deleteMovieCache(config: ListConfig): Completable {
         return Completable.fromCallable {
             return@fromCallable dbDao.movies().deleteByType(config.getType())
         }
     }
+
+    override fun getMovieDataSource(config: ListConfig) = dbDao.movies().moviesByType(config.getType())
+
 }

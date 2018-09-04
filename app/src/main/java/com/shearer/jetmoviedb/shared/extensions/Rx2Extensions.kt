@@ -9,4 +9,6 @@ fun <T> Single<T>.applySchedulers(): Single<T> = subscribeOn(Schedulers.io()).ob
 
 fun Completable.applySchedulers(): Completable = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
+fun Completable.applyIoSchedulers(): Completable = subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
+
 inline fun Completable.doOnSuccessOrError(crossinline block: () -> Unit): Completable = doOnEvent { block() }
