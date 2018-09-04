@@ -7,16 +7,13 @@ import com.shearer.jetmoviedb.shared.extensions.emptyIfNull
 data class MovieDetailDto(
         val homepage: String?,
         val backdrop_path: String?,
-        val imdb_id: String,
         val overview: String?,
         val revenue: Int,
         val runtime: Int?,
         val spoken_languages: List<SpokenLanguageDto>
 ) {
-
     fun toMovieDetails(): MovieDetail {
         return MovieDetail(emptyIfNull(homepage),
-                imdb_id,
                 emptyIfNull(overview),
                 emptyIfNull(backdrop_path),
                 revenue,

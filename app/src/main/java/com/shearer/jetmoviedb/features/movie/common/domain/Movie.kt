@@ -23,9 +23,5 @@ data class Movie(
         @SerializedName("id")
         val id: Int) : Serializable {
     var page: Int = -1
-
-    companion object {
-        val TAG = "MOVIE"
-    }
 }
 

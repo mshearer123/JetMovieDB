@@ -8,10 +8,9 @@ import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbRepository
 import com.shearer.jetmoviedb.features.movie.common.repository.MovieRepository
 import com.shearer.jetmoviedb.features.movie.list.ListConfig
 import com.shearer.jetmoviedb.features.movie.list.SearchConfig
-import com.shearer.jetmoviedb.shared.extensions.applyIoSchedulers
+import com.shearer.jetmoviedb.shared.extensions.applySchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
-
 
 interface MovieInteractor {
     fun getMovieDetails(id: Int): Single<MovieDetail>
@@ -21,6 +20,8 @@ interface MovieInteractor {
 }
 
 class MovieInteractorDefault(private val movieRepository: MovieRepository, private val movieDbRepository: MovieDbRepository) : MovieInteractor {
+
+    override fun getMovieDetails(id: Int): Single<MovieDetail> = movieRepository.getMovieDetails(id)
 
     override fun getMovies(config: ListConfig): Single<MovieResults> {
         return movieDbRepository.getNextPage(config).flatMap {
@@ -32,12 +33,11 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
                     movieRepository.getPopular(it)
                 }
             }
-        }.doOnSuccess {
-            movieDbRepository.insertMoviesInDatabase(config, it).applyIoSchedulers().subscribe()
+        }.map {
+            movieDbRepository.insertMoviesInDatabase(config, it).applySchedulers().subscribe()
+            return@map it
         }
     }
-
-    override fun getMovieDetails(id: Int): Single<MovieDetail> = movieRepository.getMovieDetails(id)
 
     override fun deleteMovieCache(config: ListConfig) = movieDbRepository.deleteMovieCache(config)
 

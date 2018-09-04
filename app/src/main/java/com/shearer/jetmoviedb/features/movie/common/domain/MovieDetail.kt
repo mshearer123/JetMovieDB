@@ -2,7 +2,6 @@ package com.shearer.jetmoviedb.features.movie.common.domain
 
 data class MovieDetail(
         val homePage: String,
-        val imdbId: String,
         val overview: String,
         val backdropPath: String,
         val revenue: Int,

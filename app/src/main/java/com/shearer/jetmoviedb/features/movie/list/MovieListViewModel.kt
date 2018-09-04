@@ -13,8 +13,9 @@ import io.reactivex.rxkotlin.plusAssign
 
 class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
-    var listConfig: ListConfig = PopularConfig()
+    private var listConfig: ListConfig = PopularConfig()
     private val pagedListConfig = PagedList.Config.Builder()
+            .setPrefetchDistance(5)
             .setPageSize(20)
             .build()
 
@@ -32,13 +33,13 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
         compositeDisposable.clear()
     }
 
-    fun searchTerm(searchString: String) {
+    fun loadSearchTerm(searchString: String) {
         listConfig = SearchConfig(searchString)
         val dataSourceFactory = movieInteractor.getDataSource(listConfig)
         pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     }
 
-    fun popular() {
+    fun loadPopular() {
         val dataSourceFactory = movieInteractor.getDataSource(listConfig)
         pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     }

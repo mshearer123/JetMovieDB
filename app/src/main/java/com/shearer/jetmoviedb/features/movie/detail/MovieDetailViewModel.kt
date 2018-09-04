@@ -2,12 +2,10 @@ package com.shearer.jetmoviedb.features.movie.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieDetail
 import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import com.shearer.jetmoviedb.shared.extensions.applySchedulers
-import com.shearer.jetmoviedb.shared.extensions.getString
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import java.text.NumberFormat
@@ -41,9 +39,9 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
         title.value = movie.title
         overview.value = movieDetail.overview
         val revenueFormatted = NumberFormat.getIntegerInstance().format(movieDetail.revenue)
-        revenue.value = getString(R.string.revenue, revenueFormatted)
-        runtime.value = getString(R.string.runtime, movieDetail.runtime.toString())
-        language.value = getString(R.string.languages, movieDetail.languages.joinToString { it })
+        revenue.value = revenueFormatted
+        runtime.value = movieDetail.runtime.toString()
+        language.value = movieDetail.languages.joinToString { it }
         link.value = movieDetail.homePage
     }
 

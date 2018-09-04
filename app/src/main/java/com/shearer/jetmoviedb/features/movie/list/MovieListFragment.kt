@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.paginate.Paginate
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.putMovie
 import com.shearer.jetmoviedb.features.movie.detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +36,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getString("SEARCH")?.let { model.searchTerm(it) } ?: model.popular()
+        arguments?.getString("SEARCH")?.let { model.loadSearchTerm(it) } ?: model.loadPopular()
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
@@ -78,7 +79,7 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     private fun launchDetails(imageView: ImageView, movie: Movie) {
         val intent = Intent(requireContext(), MovieDetailActivity::class.java).apply {
-            putExtra(Movie.TAG, movie)
+            putMovie(movie)
         }
         getTransitionName(imageView)?.let {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), imageView, it)

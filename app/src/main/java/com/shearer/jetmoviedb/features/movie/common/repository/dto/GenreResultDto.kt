@@ -1,7 +1,6 @@
 package com.shearer.jetmoviedb.features.movie.common.repository.dto
 
-data class GenreResultDto(val genres: List<GenreDto>) {
-
+data class GenreResultDto(val genres: List<GenreDto>
+) {
     fun toGenres() = genres.associateBy({ it.id }, { it.name })
-
 }
