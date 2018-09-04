@@ -1,11 +1,13 @@
 package com.shearer.jetmoviedb.features.movie.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
 import com.shearer.jetmoviedb.shared.extensions.applySchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -47,25 +49,34 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     fun loadMore() {
         compositeDisposable += movieInteractor.getMovies(listConfig)
                 .applySchedulers()
-                .subscribe({
-                    if (it.page == it.totalPages) {
-                        hasCompleted.value = true
-                    }
-                    isLoading.value = false
-                }, {
-                    isLoading.value = false
-                })
+                .subscribe(::onLoadMoreSuccess, ::onLoadMoreError)
+    }
+
+    private fun onLoadMoreSuccess(movieResults: MovieResults) {
+        if (movieResults.page == movieResults.totalPages) {
+            hasCompleted.value = true
+        }
+        isLoading.value = false
+    }
+
+    private fun onLoadMoreError(throwable: Throwable) {
+        Log.e("loadMore", "Error loading movies: " + throwable.message)
+        isLoading.value = false
     }
 
     fun refresh() {
         isRefreshing.value = true
-        compositeDisposable += movieInteractor
-                .deleteMovieCache(listConfig)
+        compositeDisposable += movieInteractor.deleteMovieCache(listConfig)
                 .applySchedulers()
-                .subscribe({
-                    isRefreshing.value = false
-                }, {
-                    isRefreshing.value = false
-                })
+                .subscribe(::onRefreshSuccess, ::onRefreshError)
+    }
+
+    private fun onRefreshSuccess() {
+        isRefreshing.value = false
+    }
+
+    private fun onRefreshError(throwable: Throwable) {
+        Log.e("refresh", "Error deleting movie cache: " + throwable.message)
+        isRefreshing.value = false
     }
 }

@@ -1,5 +1,6 @@
 package com.shearer.jetmoviedb.features.movie.detail
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
@@ -46,6 +47,7 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
     }
 
     private fun movieDetailError(throwable: Throwable) {
+        Log.e("refresh", "Error deleting movie cache: " + throwable.message)
     }
 
 }
