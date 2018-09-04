@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 class MovieDbApi {
     interface Dao {
-        @GET("movie/loadPopular")
+        @GET("movie/popular")
         fun getPopularMovies(@Query("page") page: Int): Single<MovieResultDto>
 
         @GET("search/movie")
