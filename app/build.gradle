@@ -19,7 +19,7 @@ android {
 
         // normally the API key would be picked up as an env variable or in gradle.properties by the build system.
 //        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"${System.getenv("MOVIEDB_API_KEY")}\""
-        buildConfigField 'String', "MOVIE_DB_API_KEY", "b6a9f261694991bf0ea4de0e784dfe8d"
+        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"b6a9f261694991bf0ea4de0e784dfe8d\""
     }
     buildTypes {
         release {
