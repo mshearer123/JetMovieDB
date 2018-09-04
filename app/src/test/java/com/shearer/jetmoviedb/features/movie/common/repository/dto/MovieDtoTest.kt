@@ -10,6 +10,10 @@ class MovieDtoTest {
     private val genres = createGenreDto().toGenres()
     private val movie = createPopularMoviesDto().results[0].toMovie(genres)
 
+    @Test
+    fun toMovie_convertsToMovie_resolvesMovieId() {
+        assertThat(movie.movieId).isEqualTo(299536)
+    }
 
     @Test
     fun toMovie_convertsToMovie_resolvesTitle() {
