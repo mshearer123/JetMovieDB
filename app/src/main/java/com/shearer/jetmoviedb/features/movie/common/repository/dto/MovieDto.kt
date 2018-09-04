@@ -1,6 +1,7 @@
 package com.shearer.jetmoviedb.features.movie.common.repository.dto
 
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.shared.extensions.emptyIfNull
 
 data class MovieDto(
         val id: Int,
@@ -12,7 +13,7 @@ data class MovieDto(
         val release_date: String
 ) {
     fun toMovie(genres: Map<Int, String>, type: String): Movie {
-        return Movie(title, resolveGenres(genres, genre_ids), popularity.toString(), release_date.split("-")[0], poster_path, type, id)
+        return Movie(title, resolveGenres(genres, genre_ids), popularity.toString(), release_date.split("-")[0], emptyIfNull(poster_path), type, id)
     }
 
     private fun resolveGenres(genres: Map<Int, String>, genreIds: List<Int>): String {

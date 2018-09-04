@@ -8,3 +8,5 @@ private val resources: Resources
     get() = JetMovieDBApplication.instance.resources
 
 fun getString(@StringRes id: Int, vararg args: Any): String = resources.getString(id, *args)
+
+fun emptyIfNull(string: String?) = string ?: ""

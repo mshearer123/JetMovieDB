@@ -1,17 +1,18 @@
 package com.shearer.jetmoviedb.features.movie.common.repository
 
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieDetail
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import io.reactivex.Single
 import io.reactivex.Single.just
 
 interface MovieRepository {
+    fun getMovieDetails(id: Int): Single<MovieDetail>
     fun getGenres(): Single<Map<Int, String>>
     fun getPopular(page: Long): Single<MovieResults>
     fun getMoviesBySearchTerm(page: Long, searchTerm: String): Single<MovieResults>
 }
 
 class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository {
-
 
     private val genres = mutableMapOf<Int, String>()
 
@@ -23,6 +24,12 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository 
             }
         } else {
             just(genres)
+        }
+    }
+
+    override fun getMovieDetails(id: Int): Single<MovieDetail> {
+        return dao.getMovieDetails(id).map {
+            it.toMovieDetails()
         }
     }
 

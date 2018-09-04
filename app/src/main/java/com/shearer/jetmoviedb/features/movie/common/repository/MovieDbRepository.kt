@@ -5,14 +5,29 @@ import com.shearer.jetmoviedb.features.movie.common.db.MovieDb
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.list.SearchInfo
+import io.reactivex.Single
 
 interface MovieDbRepository {
     fun insertMoviesInDatabase(searchInfo: SearchInfo, movieResults: MovieResults)
-
     fun getMovieDataSource(searchInfo: SearchInfo): DataSource.Factory<Int, Movie>
+    fun getNextPage(searchInfo: SearchInfo): Single<Long>
 }
 
 class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
+    override fun getNextPage(searchInfo: SearchInfo): Single<Long> {
+        when (searchInfo.type) {
+            SearchInfo.Type.POPULAR -> {
+                return Single.fromCallable {
+                    return@fromCallable dbDao.movies().getPageByType("popular").toLong() + 1
+                }
+            }
+            SearchInfo.Type.SEARCH -> {
+                return Single.fromCallable {
+                    return@fromCallable dbDao.movies().getPageByType(searchInfo.term!!).toLong() + 1
+                }
+            }
+        }
+    }
 
     override fun insertMoviesInDatabase(searchInfo: SearchInfo, movieResults: MovieResults) {
         dbDao.runInTransaction {
