@@ -4,6 +4,8 @@ Android studio 3.2 RC 2+
 
 Gradle wrapper 4.9
 
+or  - I have added a debug apk to the root directory
+
 ## CI Tools 
 [Bitrise](https://app.bitrise.io/apps/add) 
 
