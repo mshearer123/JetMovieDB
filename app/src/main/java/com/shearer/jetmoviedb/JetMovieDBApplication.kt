@@ -7,7 +7,7 @@ import com.shearer.jetmoviedb.features.movie.movieModule
 import com.shearer.jetmoviedb.shared.sharedModule
 import org.koin.android.ext.android.startKoin
 
-open class JetMovieDBApplication : Application() {
+class JetMovieDBApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
