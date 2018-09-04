@@ -42,6 +42,8 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
             setHasFixedSize(true)
         }
         Paginate.with(recyclerView, this).build()
+
+        swipeToRefresh.setOnRefreshListener(model::refresh)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,6 +57,9 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
         })
         model.hasCompleted.observe(this, Observer {
             hasCompleted = it
+        })
+        model.isRefreshing.observe(this, Observer {
+            swipeToRefresh.isRefreshing = it
         })
     }
 

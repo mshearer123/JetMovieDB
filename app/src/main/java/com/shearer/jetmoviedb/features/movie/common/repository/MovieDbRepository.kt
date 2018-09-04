@@ -5,12 +5,14 @@ import com.shearer.jetmoviedb.features.movie.common.db.MovieDb
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.list.SearchInfo
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface MovieDbRepository {
     fun insertMoviesInDatabase(searchInfo: SearchInfo, movieResults: MovieResults)
     fun getMovieDataSource(searchInfo: SearchInfo): DataSource.Factory<Int, Movie>
     fun getNextPage(searchInfo: SearchInfo): Single<Long>
+    fun deleteMovieCache(searchInfo: SearchInfo): Completable
 }
 
 class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
@@ -54,6 +56,21 @@ class MovieDbRepositoryDefault(private val dbDao: MovieDb) : MovieDbRepository {
             }
             SearchInfo.Type.SEARCH -> {
                 dbDao.movies().moviesByType(searchInfo.term!!)
+            }
+        }
+    }
+
+    override fun deleteMovieCache(searchInfo: SearchInfo): Completable {
+        when (searchInfo.type) {
+            SearchInfo.Type.POPULAR -> {
+                return Completable.fromCallable {
+                    return@fromCallable dbDao.movies().deleteByType("popular")
+                }
+            }
+            SearchInfo.Type.SEARCH -> {
+                return Completable.fromCallable {
+                    return@fromCallable dbDao.movies().deleteByType(searchInfo.term!!)
+                }
             }
         }
     }
