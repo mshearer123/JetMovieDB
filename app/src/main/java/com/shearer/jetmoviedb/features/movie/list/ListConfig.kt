@@ -9,5 +9,5 @@ class SearchConfig(val searchTerm: String) : ListConfig {
 }
 
 class PopularConfig : ListConfig {
-    override fun getType() = "loadPopular"
+    override fun getType() = "popular"
 }
