@@ -1,10 +1,11 @@
 
 ## Setup
 Android studio 3.2 RC 2+
+
 Gradle wrapper 4.9
 
 ## Tools 
-bitrise for PR checks (unit tests, lint)
+[Bitrise](https://app.bitrise.io/apps/add) for PR checks (unit tests, lint)
 
 ## Libraries 
 [androidx](https://developer.android.com/topic/libraries/support-library/androidx-overview)
