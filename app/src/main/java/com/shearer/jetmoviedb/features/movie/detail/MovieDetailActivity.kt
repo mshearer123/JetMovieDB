@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.shearer.jetmoviedb.R
-import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.getMovie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.layout_movie_details.*
@@ -18,7 +18,8 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
-        val movie = intent.getSerializableExtra(Movie.TAG) as Movie
+
+        val movie = intent.getMovie()
         Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.posterUrl).fit().noFade().into(moviePosterImageView)
         model.launchMovie(movie)
 
@@ -28,9 +29,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
         model.title.observe(this, Observer { titleTextView.text = it })
         model.overview.observe(this, Observer { overviewTextView.text = it })
-        model.runtime.observe(this, Observer { runtimeTextView.text = it })
-        model.revenue.observe(this, Observer { revenueTextView.text = it })
-        model.language.observe(this, Observer { languageTextView.text = it })
+        model.runtime.observe(this, Observer { runtimeTextView.text = getString(R.string.runtime, it) })
+        model.revenue.observe(this, Observer { revenueTextView.text = getString(R.string.revenue, it) })
+        model.language.observe(this, Observer { languageTextView.text = getString(R.string.languages, it) })
         model.link.observe(this, Observer { linkTextView.text = it })
     }
 

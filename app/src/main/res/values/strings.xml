@@ -4,6 +4,4 @@
     <string name="runtime">Runtime: %s min</string>
     <string name="revenue">Revenue: $%s</string>
     <string name="languages">Languages: %s</string>
-    <string name="popular_tag">Popular</string>
-    <string name="search_term_tag">s-%s</string>
 </resources>

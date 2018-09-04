@@ -9,8 +9,8 @@ data class MovieResultDto(
         val results: List<MovieDto>
 ) {
 
-    fun toMovies(genres: Map<Int, String>, type: String): MovieResults {
-        val movies = results.map { it.toMovie(genres, type) }
+    fun toMovies(genres: Map<Int, String>): MovieResults {
+        val movies = results.map { it.toMovie(genres) }
         return MovieResults(page, total_results, total_pages, movies)
     }
 }

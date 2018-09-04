@@ -6,8 +6,7 @@ import org.junit.Test
 
 class GenreResultDtoTest {
 
-    @Test
-    fun toGenres_convertsGenresToHashMap() {
+    @Test fun toGenres_convertsGenresToHashMap() {
         createGenreDto().toGenres().run {
             assertThat(size).isEqualTo(19)
             assertThat(get(28)).isEqualTo("Action")

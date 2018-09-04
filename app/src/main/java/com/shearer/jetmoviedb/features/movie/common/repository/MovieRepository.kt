@@ -8,8 +8,8 @@ import io.reactivex.Single.just
 interface MovieRepository {
     fun getMovieDetails(id: Int): Single<MovieDetail>
     fun getGenres(): Single<Map<Int, String>>
-    fun getPopular(page: Long): Single<MovieResults>
-    fun getMoviesBySearchTerm(page: Long, searchTerm: String): Single<MovieResults>
+    fun getPopular(page: Int): Single<MovieResults>
+    fun getMoviesBySearchTerm(page: Int, searchTerm: String): Single<MovieResults>
 }
 
 class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository {
@@ -33,18 +33,18 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository 
         }
     }
 
-    override fun getPopular(page: Long): Single<MovieResults> {
+    override fun getPopular(page: Int): Single<MovieResults> {
         return getGenres().flatMap { genres ->
             dao.getPopularMovies(page).map {
-                it.toMovies(genres, "popular")
+                it.toMovies(genres)
             }
         }
     }
 
-    override fun getMoviesBySearchTerm(page: Long, searchTerm: String): Single<MovieResults> {
+    override fun getMoviesBySearchTerm(page: Int, searchTerm: String): Single<MovieResults> {
         return getGenres().flatMap { genres ->
             dao.searchMovies(page, searchTerm).map {
-                it.toMovies(genres, searchTerm)
+                it.toMovies(genres)
             }
         }
     }

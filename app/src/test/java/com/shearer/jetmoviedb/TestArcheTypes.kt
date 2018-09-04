@@ -2,6 +2,7 @@ package com.shearer.jetmoviedb
 
 import com.google.gson.GsonBuilder
 import com.shearer.jetmoviedb.features.movie.common.repository.dto.GenreResultDto
+import com.shearer.jetmoviedb.features.movie.common.repository.dto.MovieDetailDto
 import com.shearer.jetmoviedb.features.movie.common.repository.dto.MovieResultDto
 import java.io.InputStreamReader
 
@@ -17,6 +18,12 @@ fun createPopularMoviesDto() = readGson("movies_popular.json", MovieResultDto::c
 
 fun createGenreDto() = readGson("genres.json", GenreResultDto::class.java)
 
+fun createMovieDetailsDto() = readGson("movie_details.json", MovieDetailDto::class.java)
+
 fun createGenres() = createGenreDto().toGenres()
 
-fun createPopularMovies() = createPopularMoviesDto().toMovies(createGenres(), "type")
+fun createPopularMovies() = createPopularMoviesDto().toMovies(createGenres())
+
+fun createMovieDetails() = createMovieDetailsDto().toMovieDetails()
+
+fun createMovie() = createPopularMovies().movies[0]

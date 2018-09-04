@@ -1,21 +1,23 @@
 package com.shearer.jetmoviedb.features.movie.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
 import com.shearer.jetmoviedb.features.movie.common.interactor.MovieInteractor
-import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbRepository
 import com.shearer.jetmoviedb.shared.extensions.applySchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
-class MovieListViewModel(private val movieInteractor: MovieInteractor, private val movieRepository: MovieDbRepository) : ViewModel() {
+class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
-    var searchInfo = SearchInfo(SearchInfo.Type.POPULAR)
-    private val config = PagedList.Config.Builder()
+    private var listConfig: ListConfig = PopularConfig()
+    private val pagedListConfig = PagedList.Config.Builder()
+            .setPrefetchDistance(5)
             .setPageSize(20)
             .build()
 
@@ -24,6 +26,7 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor, private v
 
     var isLoading = MutableLiveData<Boolean>()
     var hasCompleted = MutableLiveData<Boolean>()
+    var isRefreshing = MutableLiveData<Boolean>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -32,36 +35,48 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor, private v
         compositeDisposable.clear()
     }
 
-    fun searchTerm(searchString: String) {
-        searchInfo = SearchInfo(SearchInfo.Type.SEARCH, searchString)
-        val dataSourceFactory = movieRepository.getMovieDataSource(searchInfo)
-        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
+    fun loadSearchTerm(searchString: String) {
+        listConfig = SearchConfig(searchString)
+        val dataSourceFactory = movieInteractor.getDataSource(listConfig)
+        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     }
 
-    fun popular() {
-        val dataSourceFactory = movieRepository.getMovieDataSource(searchInfo)
-        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
-
+    fun loadPopular() {
+        val dataSourceFactory = movieInteractor.getDataSource(listConfig)
+        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     }
 
     fun loadMore() {
-        compositeDisposable += movieInteractor.getMovies(searchInfo)
-                .doOnSuccess {
-                    movieRepository.insertMoviesInDatabase(searchInfo, it)
-                }
+        compositeDisposable += movieInteractor.getMovies(listConfig)
                 .applySchedulers()
-                .subscribe({
-                    if (it.page == it.totalPages) {
-                        hasCompleted.value = true
-                    }
-                    isLoading.value = false
-                }, {
-                    isLoading.value = false
-                })
+                .subscribe(::onLoadMoreSuccess, ::onLoadMoreError)
     }
 
+    private fun onLoadMoreSuccess(movieResults: MovieResults) {
+        if (movieResults.page == movieResults.totalPages) {
+            hasCompleted.value = true
+        }
+        isLoading.value = false
+    }
 
-    fun onRefresh() {
+    private fun onLoadMoreError(throwable: Throwable) {
+        Log.e("loadMore", "Error loading movies: " + throwable.message)
+        isLoading.value = false
+    }
 
+    fun refresh() {
+        isRefreshing.value = true
+        compositeDisposable += movieInteractor.deleteMovieCache(listConfig)
+                .applySchedulers()
+                .subscribe(::onRefreshSuccess, ::onRefreshError)
+    }
+
+    private fun onRefreshSuccess() {
+        isRefreshing.value = false
+    }
+
+    private fun onRefreshError(throwable: Throwable) {
+        Log.e("refresh", "Error deleting movie cache: " + throwable.message)
+        isRefreshing.value = false
     }
 }
