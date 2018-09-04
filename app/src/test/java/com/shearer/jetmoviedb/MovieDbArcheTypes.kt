@@ -19,4 +19,4 @@ fun createGenreDto() = readGson("genres.json", GenreResultDto::class.java)
 
 fun createGenres() = createGenreDto().toGenres()
 
-fun createPopularMovies() = createPopularMoviesDto().toMovies(createGenres(), "type")
+fun createPopularMovies() = createPopularMoviesDto().toMovies(createGenres())

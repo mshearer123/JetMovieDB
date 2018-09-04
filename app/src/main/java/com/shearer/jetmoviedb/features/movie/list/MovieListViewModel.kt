@@ -13,8 +13,8 @@ import io.reactivex.rxkotlin.plusAssign
 
 class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewModel() {
 
-    var searchInfo = SearchInfo(SearchInfo.Type.POPULAR)
-    private val config = PagedList.Config.Builder()
+    var listConfig: ListConfig = PopularConfig()
+    private val pagedListConfig = PagedList.Config.Builder()
             .setPageSize(20)
             .build()
 
@@ -33,21 +33,21 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     }
 
     fun searchTerm(searchString: String) {
-        searchInfo = SearchInfo(SearchInfo.Type.SEARCH, searchString)
-        val dataSourceFactory = movieInteractor.getDataSource(searchInfo)
-        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
+        listConfig = SearchConfig(searchString)
+        val dataSourceFactory = movieInteractor.getDataSource(listConfig)
+        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     }
 
     fun popular() {
-        val dataSourceFactory = movieInteractor.getDataSource(searchInfo)
-        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
+        val dataSourceFactory = movieInteractor.getDataSource(listConfig)
+        pagedListLiveData = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
 
     }
 
     fun loadMore() {
-        compositeDisposable += movieInteractor.getMovies(searchInfo)
+        compositeDisposable += movieInteractor.getMovies(listConfig)
                 .doOnSuccess {
-                    movieInteractor.saveMovies(searchInfo, it)
+                    movieInteractor.saveMovies(listConfig, it)
                 }
                 .applySchedulers()
                 .subscribe({
@@ -64,7 +64,7 @@ class MovieListViewModel(private val movieInteractor: MovieInteractor) : ViewMod
     fun refresh() {
         isRefreshing.value = true
         compositeDisposable += movieInteractor
-                .deleteMovieCache(searchInfo)
+                .deleteMovieCache(listConfig)
                 .applySchedulers()
                 .subscribe({
                     isRefreshing.value = false

@@ -36,7 +36,7 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository 
     override fun getPopular(page: Long): Single<MovieResults> {
         return getGenres().flatMap { genres ->
             dao.getPopularMovies(page).map {
-                it.toMovies(genres, "popular")
+                it.toMovies(genres)
             }
         }
     }
@@ -44,7 +44,7 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository 
     override fun getMoviesBySearchTerm(page: Long, searchTerm: String): Single<MovieResults> {
         return getGenres().flatMap { genres ->
             dao.searchMovies(page, searchTerm).map {
-                it.toMovies(genres, searchTerm)
+                it.toMovies(genres)
             }
         }
     }

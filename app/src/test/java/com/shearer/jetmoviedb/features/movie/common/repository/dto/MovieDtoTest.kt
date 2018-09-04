@@ -7,9 +7,8 @@ import org.junit.Test
 
 class MovieDtoTest {
 
-    private val type = "type"
     private val genres = createGenreDto().toGenres()
-    private val movie = createPopularMoviesDto().results[0].toMovie(genres, type)
+    private val movie = createPopularMoviesDto().results[0].toMovie(genres)
 
 
     @Test
@@ -35,10 +34,5 @@ class MovieDtoTest {
     @Test
     fun toMovie_convertsToMovie_resolvesPosterPath() {
         assertThat(movie.posterUrl).isEqualTo("/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg")
-    }
-
-    @Test
-    fun toMovie_convertsToMovie_setsType() {
-        assertThat(movie.type).isEqualTo(type)
     }
 }
