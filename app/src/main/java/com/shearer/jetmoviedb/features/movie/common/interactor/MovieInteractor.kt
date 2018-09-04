@@ -12,6 +12,7 @@ import com.shearer.jetmoviedb.shared.extensions.applyIoSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
 
+
 interface MovieInteractor {
     fun getMovieDetails(id: Int): Single<MovieDetail>
     fun getMovies(config: ListConfig): Single<MovieResults>

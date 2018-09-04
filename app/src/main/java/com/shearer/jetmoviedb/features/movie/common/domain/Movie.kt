@@ -19,7 +19,7 @@ data class Movie(
         @SerializedName("posterUrl")
         val posterUrl: String,
         @SerializedName("type")
-        var type: String?,
+        var type: String? = null,
         @SerializedName("id")
         val id: Int) : Serializable {
     var page: Int = -1

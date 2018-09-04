@@ -22,6 +22,6 @@ val movieModule = module {
     factory { MovieInteractorDefault(get(), get()) as MovieInteractor }
     factory { RestServiceDefault(get()).createMovieApi() }
 
-    viewModel { MovieListViewModel(get()) }
+    viewModel { MovieListViewModel(get(), get()) }
     viewModel { MovieDetailViewModel(get()) }
 }
