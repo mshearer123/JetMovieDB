@@ -13,7 +13,12 @@ data class MovieDto(
         val release_date: String
 ) {
     fun toMovie(genres: Map<Int, String>): Movie {
-        return Movie(title, resolveGenres(genres, genre_ids), popularity.toString(), release_date.split("-")[0], emptyIfNull(poster_path), id = id)
+        return Movie(title = title,
+                genres = resolveGenres(genres, genre_ids),
+                popularity = popularity.toString(),
+                releaseYear = release_date.split("-")[0],
+                posterUrl = emptyIfNull(poster_path),
+                movieId = id)
     }
 
     private fun resolveGenres(genres: Map<Int, String>, genreIds: List<Int>): String {

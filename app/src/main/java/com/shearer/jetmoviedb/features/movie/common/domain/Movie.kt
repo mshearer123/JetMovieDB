@@ -7,7 +7,9 @@ import java.io.Serializable
 
 @Entity(tableName = "movies")
 data class Movie(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
+        @SerializedName("id")
+        val id: Int = 0,
         @SerializedName("title")
         val title: String,
         @SerializedName("genres")
@@ -20,8 +22,10 @@ data class Movie(
         val posterUrl: String,
         @SerializedName("type")
         var type: String? = null,
-        @SerializedName("id")
-        val id: Int) : Serializable {
+        @SerializedName("movie_id")
+        val movieId: Int
+) : Serializable {
     var page: Int = -1
+
 }
 
