@@ -26,7 +26,7 @@ class MovieDbRepositoryDefaultTest {
         val config = PopularConfig()
         val source = repository.getNextPage(config).blockingGet()
         assertThat(source).isEqualTo(3)
-        verify(movieDao).getPageByType("loadPopular")
+        verify(movieDao).getPageByType("popular")
     }
 
     @Test fun getNextPage_search_callMovieDbGetNextPage_isNextPagePlus1() {
@@ -48,7 +48,7 @@ class MovieDbRepositoryDefaultTest {
         val config = PopularConfig()
         repository.deleteMovieCache(config).blockingGet()
 
-        verify(movieDao).deleteByType("loadPopular")
+        verify(movieDao).deleteByType("popular")
     }
 
     @Test fun deleteMovieCache_search_callsDaoDeleteByTypeSearchTerm() {
@@ -62,7 +62,7 @@ class MovieDbRepositoryDefaultTest {
         val config = PopularConfig()
         repository.getMovieDataSource(config)
 
-        verify(movieDao).moviesByType("loadPopular")
+        verify(movieDao).moviesByType("popular")
     }
 
     @Test fun getMovieDataSource_search_callsDaoForSource() {

@@ -6,7 +6,7 @@ import org.junit.Test
 class ListConfigTest {
 
     @Test fun popularConfig_getType_returnsPopular() {
-        assertThat(PopularConfig().getType()).isEqualTo("loadPopular")
+        assertThat(PopularConfig().getType()).isEqualTo("popular")
     }
 
     @Test fun searchConfig_getType_returnsSearchWithPrefix() {
