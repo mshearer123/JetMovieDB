@@ -25,7 +25,7 @@ class MovieDetailViewModel(private val movieInteractor: MovieInteractor) : ViewM
 
     fun launchMovie(movie: Movie) {
         this.movie = movie
-        compositeDisposable += movieInteractor.getMovieDetails(movie.id)
+        compositeDisposable += movieInteractor.getMovieDetails(movie.movieId)
                 .applySchedulers()
                 .subscribe(::movieDetailSuccess, ::movieDetailError)
     }
