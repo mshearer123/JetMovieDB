@@ -1,5 +1,5 @@
 
-<img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/list.png" width="240" height="400">       <img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/details.png" width="240" height="400">
+<img src="https://github.com/mshearer123/JetMovieDB/blob/master/images/list.png" width="240" height="400">       <img src="https://github.com/mshearer123/JetMovieDB/blob/master/images/details.png" width="240" height="400">
 
 ## Choices
 
