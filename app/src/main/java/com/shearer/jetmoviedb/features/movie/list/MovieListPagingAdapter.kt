@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
 import com.shearer.jetmoviedb.shared.extensions.getString
 import com.shearer.jetmoviedb.shared.extensions.inflate
 import com.squareup.picasso.Picasso
@@ -32,7 +33,7 @@ class MovieListPagingAdapter(private val itemClickListener: (ImageView, Movie) -
             titleTextView.text = getString(R.string.movie_title, movie.title, movie.releaseYear)
             genreTextView.text = movie.genres
             popularityTextView.text = movie.popularity
-            Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.posterUrl).fit().into(posterImageView)
+            Picasso.get().load(MovieDbConstants.posterBaseUrl + movie.posterUrl).fit().into(posterImageView)
             itemView.setOnClickListener {
                 itemClickListener(posterImageView, movie)
             }

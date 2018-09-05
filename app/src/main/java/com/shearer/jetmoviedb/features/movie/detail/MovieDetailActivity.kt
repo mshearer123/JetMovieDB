@@ -2,9 +2,10 @@ package com.shearer.jetmoviedb.features.movie.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.getMovie
+import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
+import com.shearer.jetmoviedb.shared.extensions.observeIt
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.layout_movie_details.*
@@ -19,20 +20,20 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        val movie = intent.getMovie()
-        Picasso.get().load("https://image.tmdb.org/t/p/w342/" + movie.posterUrl).fit().noFade().into(moviePosterImageView)
-        model.launchMovie(movie)
+        intent.getMovie().run {
+            Picasso.get().load(MovieDbConstants.posterBaseUrl + this.posterUrl).fit().noFade().into(moviePosterImageView)
+            model.launchMovie(this)
+        }
 
-        model.backgroundPoster.observe(this, Observer {
-            Picasso.get().load("https://image.tmdb.org/t/p/w780/" + it).fit().into(movieBackgroundImageView)
-        })
-
-        model.title.observe(this, Observer { titleTextView.text = it })
-        model.overview.observe(this, Observer { overviewTextView.text = it })
-        model.runtime.observe(this, Observer { runtimeTextView.text = getString(R.string.runtime, it) })
-        model.revenue.observe(this, Observer { revenueTextView.text = getString(R.string.revenue, it) })
-        model.language.observe(this, Observer { languageTextView.text = getString(R.string.languages, it) })
-        model.link.observe(this, Observer { linkTextView.text = it })
+        model.backgroundPoster.observeIt(this) {
+            Picasso.get().load(MovieDbConstants.backgroundBaseUrl + it).fit().into(movieBackgroundImageView)
+        }
+        model.title.observeIt(this) { titleTextView.text = it }
+        model.overview.observeIt(this) { overviewTextView.text = it }
+        model.runtime.observeIt(this) { runtimeTextView.text = getString(R.string.runtime, it) }
+        model.revenue.observeIt(this) { revenueTextView.text = getString(R.string.revenue, it) }
+        model.language.observeIt(this) { languageTextView.text = getString(R.string.languages, it) }
+        model.link.observeIt(this) { linkTextView.text = it }
     }
 
 }
