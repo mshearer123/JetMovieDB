@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat.getTransitionName
 import androidx.fragment.app.Fragment
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.paginate.Paginate
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
@@ -39,6 +40,16 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getSearch()?.let { model.loadSearchTerm(it) } ?: model.loadPopular()
+
+        // added data observer to scroll to the top of the list if the data is deleted (refreshed)
+        movieAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    recyclerView.layoutManager?.scrollToPosition(0)
+                }
+            }
+        })
+
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
@@ -69,7 +80,6 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
     override fun hasLoadedAllItems() = hasCompleted
 
     private fun setPagedData(pagedList: PagedList<Movie>) {
-        recyclerView.scrollToPosition(0)
         movieAdapter.submitList(pagedList)
     }
 
