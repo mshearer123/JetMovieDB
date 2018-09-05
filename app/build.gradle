@@ -16,7 +16,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"${System.getenv("MOVIEDB_API_KEY")}\""
+
+        // normally the API key would be picked up as an env variable or in gradle.properties by the build system.
+//        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"${System.getenv("MOVIEDB_API_KEY")}\""
+        buildConfigField 'String', "MOVIE_DB_API_KEY", "\"b6a9f261694991bf0ea4de0e784dfe8d\""
     }
     buildTypes {
         release {
@@ -60,7 +63,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
     implementation 'androidx.paging:paging-common:2.0.0-rc01'
     implementation 'androidx.paging:paging-runtime:2.0.0-rc01'
-    implementation 'androidx.palette:palette:1.0.0-rc02'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
     implementation 'com.google.android.material:material:1.0.0-rc01'
 
@@ -92,8 +94,7 @@ dependencies {
     // stetho - http://facebook.github.io/stetho/
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
-
-
+    
 
     testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     testImplementation 'com.google.truth:truth:0.34'
