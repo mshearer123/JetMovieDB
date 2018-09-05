@@ -1,8 +1,22 @@
 
 
-## Design choice
+## Choices
+
 ### UI
-The app has an extemely small feature set so I wanted to keep the UI 
+
+The app has an extremely small feature set so I wanted to keep the UI pretty simple.  Google seems to be moving things more and more towards the bottom of the screen, so I put the toolbar there so it's easy to click.  
+
+The white navigation, status and background are modelled off the google tasks app.
+
+### Architecture
+
+I've been building android apps using MVP ( + Interactor) architecture for the last couple of years.
+
+Now I prefer googles MVVM framework.  While in MVP lifecycle and  order of execution methods is a concern.  MVVM removes this and allows logical code to be run without worrying about pushing commands to the view.   I feel the interactor + repository pattern still fits fine with MVVM
+
+
+I considered using databing because it fits well with MVVM but some people hate it with a passion, so I left it out.
+
 
 
 ### Setup
