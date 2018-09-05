@@ -9,13 +9,16 @@ import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat.getTransitionName
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.paginate.Paginate
 import com.shearer.jetmoviedb.R
 import com.shearer.jetmoviedb.features.movie.common.domain.Movie
+import com.shearer.jetmoviedb.features.movie.common.getSearch
 import com.shearer.jetmoviedb.features.movie.common.putMovie
 import com.shearer.jetmoviedb.features.movie.detail.MovieDetailActivity
+import com.shearer.jetmoviedb.shared.extensions.observeIt
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,7 +39,17 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getString("SEARCH")?.let { model.loadSearchTerm(it) } ?: model.loadPopular()
+        arguments?.getSearch()?.let { model.loadSearchTerm(it) } ?: model.loadPopular()
+
+        // added data observer to scroll to the top of the list if the data is deleted (refreshed)
+        movieAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    recyclerView.layoutManager?.scrollToPosition(0)
+                }
+            }
+        })
+
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
@@ -49,19 +62,10 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        model.pagedListLiveData.observe(this, Observer {
-            recyclerView.scrollToPosition(0)
-            movieAdapter.submitList(it)
-        })
-        model.isLoading.observe(this, Observer {
-            isLoading = it
-        })
-        model.hasCompleted.observe(this, Observer {
-            hasCompleted = it
-        })
-        model.isRefreshing.observe(this, Observer {
-            swipeToRefresh.isRefreshing = it
-        })
+        model.pagedListLiveData.observeIt(this, ::setPagedData)
+        model.isLoading.observeIt(this) { isLoading = it }
+        model.hasCompleted.observeIt(this) { hasCompleted = it }
+        model.isRefreshing.observeIt(this) { swipeToRefresh.isRefreshing = it }
     }
 
     override fun onLoadMore() {
@@ -73,8 +77,10 @@ class MovieListFragment : Fragment(), Paginate.Callbacks {
 
     override fun isLoading() = isLoading
 
-    override fun hasLoadedAllItems(): Boolean {
-        return hasCompleted
+    override fun hasLoadedAllItems() = hasCompleted
+
+    private fun setPagedData(pagedList: PagedList<Movie>) {
+        movieAdapter.submitList(pagedList)
     }
 
     private fun launchDetails(imageView: ImageView, movie: Movie) {

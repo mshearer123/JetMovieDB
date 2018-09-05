@@ -2,6 +2,7 @@ package com.shearer.jetmoviedb.features.movie.common.repository
 
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieDetail
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieResults
+import com.shearer.jetmoviedb.features.movie.common.repository.dto.MovieDetailDto
 import io.reactivex.Single
 import io.reactivex.Single.just
 
@@ -28,9 +29,7 @@ class MovieRepositoryDefault(private val dao: MovieDbApi.Dao) : MovieRepository 
     }
 
     override fun getMovieDetails(id: Int): Single<MovieDetail> {
-        return dao.getMovieDetails(id).map {
-            it.toMovieDetails()
-        }
+        return dao.getMovieDetails(id).map(MovieDetailDto::toMovieDetails)
     }
 
     override fun getPopular(page: Int): Single<MovieResults> {
