@@ -15,4 +15,3 @@ fun SearchView.onQueryTextSubmit(queryEntered: (String) -> Unit) {
         override fun onQueryTextChange(newText: String?) = false
     })
 }
-
