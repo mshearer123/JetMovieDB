@@ -10,13 +10,10 @@ The white navigation, status and background are modelled off the google tasks ap
 
 ### Architecture
 
-I've been building android apps using MVP ( + Interactor) architecture for the last couple of years.
-
-Now I prefer google's MVVM framework.  While in MVP lifecycle and  order of execution methods is a concern.  MVVM removes this and allows logical code to be run without worrying about pushing commands to the view.   I feel the interactor + repository pattern still fits fine with MVVM
+I've been building android apps using MVP ( + Interactor) architecture for the last couple of years.  Although, now I prefer google's MVVM framework.  While in MVP lifecycle and order of execution methods is a concern.   MVVM removes this concern and allows logical code to run without worrying about what order commands are pushed to the view.   I feel the interactor + repository pattern still fits fine with MVVM.
 
 
 I considered using data binding because it fits well with MVVM but some people hate it with a passion, so I left it out.
-
 
 
 ### Setup
@@ -28,12 +25,12 @@ or
 
 I have added a debug apk to the root directory
 
-### CI Tools 
+### CI tools 
 #### [Bitrise](https://app.bitrise.io/apps/add) 
 
-I integrated the github repo with bitrise so I would get some feedback on PRs before they were merged.
+I integrated the github repo with bitrise so that I would get some feedback on PRs before they were merged.
 
-### Libraries 
+### libraries 
 
 #### [androidx](https://developer.android.com/topic/libraries/support-library/androidx-overview)
 
@@ -44,7 +41,7 @@ I decided early on that I'd try to use the most up to date google libraries thro
 
 #### [room](https://developer.android.com/training/data-storage/room/)
 
-I'm not sure if room is considered 3rd party but I choose to use Room over other persistence libraries because it plays nicely with the androidx paging library.
+I'm not sure if Room is considered 3rd party.  However I choose to use Room over other persistence libraries because it plays nicely with the androidx paging library and avoids adding a non-google 3rd party.
 
 
 #### [Paginate](https://github.com/MarkoMilos/Paginate)
@@ -68,27 +65,27 @@ Retorfit, okhttp and gson are a pretty much the gold standard in android network
 #### [koin](https://github.com/InsertKoinIO/koin)
 
 We use Dagger 2 extensively in my current job but I'm always curious about alternatives. 
-Arguing between the difference of Dagger and a service locator like koin seems to be the topic of the moment in the android world.  I like koin because for simple projects it is extremely straightforward.   It also prints out nice readable error messages, which Dagger does not.
+Arguing between the difference of Dagger and a service locator like koin seems to be the topic of the moment in the android world.  I like koin because for simple projects it is extremely straightforward.   It also prints out readable error messages, which Dagger does not.
 
 
 #### [picasso](http://square.github.io/picasso/)
 
 There are quite a few good options for image processing libraries at the minute, picasso, glide and fresco.
-I'm probably more used to using glide, but as picasso 3 is about to be released I choose to use picasso as it is being more actively developed on.
+I'm probably more used to using glide, but as picasso 3 is about to be released I chose to use picasso as it is being more actively developed on.
 
 
-### debug Libraries 
+### debug libraries 
 
 #### [stetho](http://facebook.github.io/stetho/)
 
 Steho allows you to easily debug network traffic and your local db through chrome.  This is great for both debugging and attaching useful screenshots to PRs that need to explain db changes or networking changes.
 
 
-### test Libraries 
+### test libraries 
 
 #### [mockito-kotlin](https://github.com/nhaarman/mockito-kotlin)
 
-Helps writing cleared tests with kotlin
+Helps writing cleared tests with kotlin.
 
 
 #### [truth](https://github.com/google/truth)
