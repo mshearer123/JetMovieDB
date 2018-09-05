@@ -1,7 +1,7 @@
 package com.shearer.jetmoviedb.features.movie.common.repository.dto
 
 import com.shearer.jetmoviedb.features.movie.common.domain.MovieDetail
-import com.shearer.jetmoviedb.shared.extensions.emptyIfNull
+import com.shearer.jetmoviedb.shared.util.emptyIfNull
 
 
 data class MovieDetailDto(

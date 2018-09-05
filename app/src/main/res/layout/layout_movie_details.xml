@@ -8,6 +8,7 @@
         android:elevation="4dp"
         android:orientation="vertical">
 
+
     <androidx.cardview.widget.CardView
             android:id="@+id/moviePosterContainer"
             android:layout_width="wrap_content"
@@ -35,10 +36,13 @@
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
             android:layout_marginTop="@dimen/first_keyline"
+            android:alpha="0"
             android:textAppearance="@style/Body2Grey3.Bold"
+
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:alpha="1"
             tools:text="Move title"/>
 
     <TextView
@@ -47,10 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
+            android:alpha="0"
             android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            tools:alpha="1"
             tools:text="Runtime 800min"/>
 
     <TextView
@@ -59,11 +65,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
+            android:alpha="0"
             android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/runtimeTextView"
-            tools:text="Revenue - $400"/>
+            tools:alpha="1"
+            tools:text="Revenue - $400"
+            tools:visibility="visible"/>
 
     <TextView
             android:id="@+id/languageTextView"
@@ -71,11 +80,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
+            android:alpha="0"
             android:textAppearance="@style/Body1Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/revenueTextView"
-
+            tools:alpha="1"
             tools:text="Language - English"/>
 
     <TextView
@@ -84,12 +94,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
+            android:alpha="0"
             android:autoLink="web"
-            android:textAppearance="@style/Body1Grey2"
+            android:textSize="12sp"
+
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/languageTextView"
-            tools:text="link"/>
+            tools:alpha="1"
+            tools:text="link"
+            tools:visibility="visible"/>
 
     <TextView
             android:id="@+id/overviewTextView"
@@ -98,11 +112,23 @@
             android:layout_marginEnd="@dimen/first_keyline"
             android:layout_marginStart="@dimen/first_keyline"
             android:layout_marginTop="@dimen/half_keyline"
-            android:textSize="12sp"
+            android:alpha="0"
+            android:textAppearance="@style/Body2Grey2"
             app:layout_constraintEnd_toStartOf="@id/moviePosterContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/moviePosterContainer"
-            tools:text="overview"/>
+            tools:alpha="1"
+            tools:text="overview"
+            tools:visibility="visible"/>
+
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
