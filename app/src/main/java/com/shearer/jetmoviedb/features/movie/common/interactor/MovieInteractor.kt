@@ -33,9 +33,9 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
                     movieRepository.getPopular(it)
                 }
             }
-        }.map {
-            movieDbRepository.insertMoviesInDatabase(config, it).applySchedulers().subscribe()
-            return@map it
+        }.map { movieResults ->
+            val disposable = movieDbRepository.insertMoviesInDatabase(config, movieResults).applySchedulers().subscribe({},{})
+            return@map movieResults
         }
     }
 

@@ -12,10 +12,10 @@ The white navigation, status and background are modelled off the google tasks ap
 
 I've been building android apps using MVP ( + Interactor) architecture for the last couple of years.
 
-Now I prefer googles MVVM framework.  While in MVP lifecycle and  order of execution methods is a concern.  MVVM removes this and allows logical code to be run without worrying about pushing commands to the view.   I feel the interactor + repository pattern still fits fine with MVVM
+Now I prefer google's MVVM framework.  While in MVP lifecycle and  order of execution methods is a concern.  MVVM removes this and allows logical code to be run without worrying about pushing commands to the view.   I feel the interactor + repository pattern still fits fine with MVVM
 
 
-I considered using databing because it fits well with MVVM but some people hate it with a passion, so I left it out.
+I considered using data binding because it fits well with MVVM but some people hate it with a passion, so I left it out.
 
 
 
