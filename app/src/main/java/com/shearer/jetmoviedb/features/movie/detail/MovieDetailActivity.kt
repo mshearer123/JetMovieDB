@@ -3,6 +3,7 @@ package com.shearer.jetmoviedb.features.movie.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.shearer.jetmoviedb.R
+import com.shearer.jetmoviedb.features.movie.common.domain.Movie
 import com.shearer.jetmoviedb.features.movie.common.getMovie
 import com.shearer.jetmoviedb.features.movie.common.repository.MovieDbConstants
 import com.shearer.jetmoviedb.shared.extensions.observeIt
@@ -20,10 +21,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        intent.getMovie().run {
-            Picasso.get().load(MovieDbConstants.posterBaseUrl + this.posterUrl).fit().noFade().into(moviePosterImageView)
-            model.launchMovie(this)
-        }
+        intent.getMovie().run(::loadMovie)
 
         model.backgroundPoster.observeIt(this) {
             Picasso.get().load(MovieDbConstants.backgroundBaseUrl + it).fit().into(movieBackgroundImageView)
@@ -34,6 +32,11 @@ class MovieDetailActivity : AppCompatActivity() {
         model.revenue.observeIt(this) { revenueTextView.text = getString(R.string.revenue, it) }
         model.language.observeIt(this) { languageTextView.text = getString(R.string.languages, it) }
         model.link.observeIt(this) { linkTextView.text = it }
+    }
+
+    private fun loadMovie(movie: Movie) {
+        Picasso.get().load(MovieDbConstants.posterBaseUrl + movie.posterUrl).fit().noFade().into(moviePosterImageView)
+        model.launchMovie(movie)
     }
 
 }

@@ -13,4 +13,5 @@ fun Bundle.putSearch(searchTerm: String): Bundle {
     putString("search", searchTerm)
     return this
 }
+
 fun Bundle.getSearch() = getString("search") as String

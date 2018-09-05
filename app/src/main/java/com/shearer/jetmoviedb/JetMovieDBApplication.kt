@@ -11,7 +11,6 @@ class JetMovieDBApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         startKoin(this, listOf(mainModule, sharedModule, movieModule))
         addStetho()
     }
@@ -21,10 +20,4 @@ class JetMovieDBApplication : Application() {
             Stetho.initializeWithDefaults(this)
         }
     }
-
-
-    companion object {
-        lateinit var instance: JetMovieDBApplication private set
-    }
 }
-

@@ -18,7 +18,7 @@ data class MovieDetailDto(
                 emptyIfNull(backdrop_path),
                 revenue,
                 runtime?.let { it } ?: 0,
-                spoken_languages.map { it.name }.toList()
+                spoken_languages.map(SpokenLanguageDto::name).toList()
         )
     }
 }

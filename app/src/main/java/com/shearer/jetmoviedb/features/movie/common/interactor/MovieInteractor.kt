@@ -26,15 +26,13 @@ class MovieInteractorDefault(private val movieRepository: MovieRepository, priva
     override fun getMovies(config: ListConfig): Single<MovieResults> {
         return movieDbRepository.getNextPage(config).flatMap {
             when (config) {
-                is SearchConfig -> {
-                    movieRepository.getMoviesBySearchTerm(it, config.searchTerm)
-                }
-                else -> {
-                    movieRepository.getPopular(it)
-                }
+                is SearchConfig -> movieRepository.getMoviesBySearchTerm(it, config.searchTerm)
+                else -> movieRepository.getPopular(it)
             }
         }.map { movieResults ->
-            val disposable = movieDbRepository.insertMoviesInDatabase(config, movieResults).applySchedulers().subscribe({},{})
+            val disposable = movieDbRepository.insertMoviesInDatabase(config, movieResults)
+                    .applySchedulers()
+                    .subscribe({},{})
             return@map movieResults
         }
     }
