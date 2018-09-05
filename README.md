@@ -1,15 +1,5 @@
 
-
-<div class="row">
-  <div class="column">
-    <img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/list.png" width="240" height="400">
-  </div>
-  <div class="column">
-  </div>
-  <div class="column">
-    <img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/details.png" width="240" height="400">
-  </div>
-</div>
+<img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/list.png" width="240" height="400">       <img src="https://github.com/mshearer123/JetMovieDB/blob/feature/improved_search/images/details.png" width="240" height="400">
 
 ## Choices
 
