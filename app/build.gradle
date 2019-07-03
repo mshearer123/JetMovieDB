@@ -99,7 +99,7 @@ dependencies {
     testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     testImplementation 'com.google.truth:truth:0.34'
     testImplementation 'junit:junit:4.12'
-    testImplementation "androidx.arch.core:core-testing:2.0.0-rc01"
+    testImplementation "androidx.arch.core:core-testing:2.1.0-rc01"
     testImplementation 'androidx.test:rules:1.1.0-alpha4'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
