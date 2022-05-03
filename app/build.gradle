@@ -82,7 +82,7 @@ dependencies {
     // rxjava2 - https://github.com/ReactiveX/RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     // koin - https://github.com/InsertKoinIO/koin
     implementation 'org.koin:koin-android:1.0.0-beta-7'
